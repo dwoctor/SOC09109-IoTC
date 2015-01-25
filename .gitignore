@@ -24,3 +24,10 @@ proguard/
 
 # Log Files
 *.log
+
+# IntelliJ IDEA folders
+.idea/workspace.xml
+.idea/libraries
+
+# Mac Junk
+.DS_Store
