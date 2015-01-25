@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">Communicator</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="this_will_change">This will Change</string>
     <string name="action_settings">Settings</string>
 
 </resources>

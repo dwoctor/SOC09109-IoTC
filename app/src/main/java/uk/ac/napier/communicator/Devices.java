@@ -11,7 +11,6 @@ import android.widget.EditText;
 import uk.ac.napier.communicator.communication.logistics.Postie;
 import uk.ac.napier.communicator.communication.messages.SimpleMessage;
 import uk.ac.napier.communicator.ui.EditTextComponent;
-import uk.ac.napier.communicator.ui.PrintProcessObserver;
 
 
 public class Devices extends ActionBarActivity {
@@ -22,12 +21,9 @@ public class Devices extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_devices);
-        Button startButton = this.getStartButton();
-        EditText startText = this.getStartText();
-
-        pat = Postie.getInstance();
-        pat.getPrintProcess().add(new EditTextComponent(startText));
-        pat.start();
+        this.pat = Postie.getInstance();
+        this.pat.getPrintProcess().add(new EditTextComponent(this.getStartText()));
+        this.pat.start();
     }
 
 

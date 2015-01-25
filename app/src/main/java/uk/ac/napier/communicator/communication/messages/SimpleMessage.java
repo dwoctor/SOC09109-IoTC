@@ -5,13 +5,6 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import org.apache.http.Header;
-import org.apache.http.HeaderElement;
-import org.apache.http.ParseException;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.message.BasicHeader;
-
-import uk.ac.napier.communicator.communication.protocols.HttpMessage;
 import uk.ac.napier.communicator.communication.protocols.SimpleMessageProtocol;
 
 /**

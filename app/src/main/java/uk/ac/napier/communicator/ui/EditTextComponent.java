@@ -2,20 +2,26 @@ package uk.ac.napier.communicator.ui;
 
 import android.widget.EditText;
 
-import uk.ac.napier.communicator.R;
+import uk.ac.napier.communicator.communication.logistics.Postie;
 
 /**
  * Created by David on 23/01/2015.
  */
-public class EditTextComponent implements PrintProcessObserver {
+public class EditTextComponent extends UIComponent implements PrintProcessObserver {
 
-    private final EditText editText;
+    private EditText editText;
+    private String text;
 
     public EditTextComponent(EditText component) {
         this.editText = component;
     }
 
-    public void update(String text) {
+    public void updateText(String text) {
+        this.text = text;
+        this.handleDecodeState(UIComponent.DECODE_STATE_COMPLETED);
+    }
+
+    public void updateUI() {
         this.editText.setText(text);
     }
 
