@@ -15,12 +15,17 @@ import uk.ac.napier.communicator.ui.EditTextComponent;
 
 public class Devices extends ActionBarActivity {
 
+    private Button startButton;
+    private EditText startText;
+
     Postie pat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_devices);
+        this.startButton = this.getStartButton();
+        this.startText = this.getStartText();
         this.pat = Postie.getInstance();
         this.pat.getPrintProcess().add(new EditTextComponent(this.getStartText()));
         this.pat.start();
@@ -51,23 +56,29 @@ public class Devices extends ActionBarActivity {
 
 
     private Button getStartButton() {
-        final Button button = (Button) findViewById(R.id.startButton);
-        button.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                // Perform action on click
-                try {
-                    pat.post(new SimpleMessage());
-                } catch (Exception e) {
-                    e.printStackTrace();
+        if (this.startButton == null) {
+            Button startButton = (Button) findViewById(R.id.startButton);
+            startButton.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    // Perform action on click
+                    try {
+                        pat.post(new SimpleMessage());
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
-            }
-        });
-        return button;
+            });
+            this.startButton = startButton;
+        }
+        return this.startButton;
     }
 
     private EditText getStartText() {
-        final EditText editText = (EditText) findViewById(R.id.startText);
-        return editText;
+        if (this.startText == null) {
+            EditText startText = (EditText) findViewById(R.id.startText);
+            this.startText = startText;
+        }
+        return this.startText;
     }
 }
 
