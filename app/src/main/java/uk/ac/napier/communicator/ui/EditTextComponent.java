@@ -2,8 +2,6 @@ package uk.ac.napier.communicator.ui;
 
 import android.widget.EditText;
 
-import uk.ac.napier.communicator.communication.logistics.Postie;
-
 /**
  * Created by David on 23/01/2015.
  */

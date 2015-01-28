@@ -18,11 +18,10 @@ public class SimpleMessage extends uk.ac.napier.communicator.communication.messa
 
     private String url = "http://192.168.0.244/";
 
-    public String jsonize() {
-        GsonBuilder gsonBuilder = new GsonBuilder();
-        gsonBuilder.excludeFieldsWithoutExposeAnnotation();
-        Gson gson = gsonBuilder.create();
-        return gson.toJson(this);
+    public SimpleMessage() throws Exception {
+        SimpleMessageProtocol protocol = new SimpleMessageProtocol();
+        protocol.setMessage(this.message);
+        this.setMessageProtocol(protocol);
     }
 
     public static SimpleMessage dejsonize(String json) {
@@ -30,10 +29,11 @@ public class SimpleMessage extends uk.ac.napier.communicator.communication.messa
         return gson.fromJson(json, SimpleMessage.class);
     }
 
-    public SimpleMessage() throws Exception {
-        SimpleMessageProtocol protocol = new SimpleMessageProtocol();
-        protocol.setMessage(this.message);
-        this.setMessageProtocol(protocol);
+    public String jsonize() {
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        gsonBuilder.excludeFieldsWithoutExposeAnnotation();
+        Gson gson = gsonBuilder.create();
+        return gson.toJson(this);
     }
 
 }

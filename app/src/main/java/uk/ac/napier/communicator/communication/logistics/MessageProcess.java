@@ -11,9 +11,9 @@ import uk.ac.napier.communicator.communication.messages.Message;
  */
 public class MessageProcess implements CSProcess {
 
-    private Boolean connected = true;
     private final ChannelInput<Message> inSend;
     private final ChannelOutput<String> outResponse;
+    private Boolean connected = true;
 
     public MessageProcess(ChannelInput<Message> inSend, ChannelOutput<String> outResponse) {
         this.inSend = inSend;

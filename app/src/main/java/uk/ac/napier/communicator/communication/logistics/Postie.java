@@ -2,7 +2,6 @@ package uk.ac.napier.communicator.communication.logistics;
 
 import android.os.Handler;
 import android.os.Looper;
-import android.widget.EditText;
 import android.os.Message;
 
 import org.jcsp.lang.Channel;
@@ -10,7 +9,6 @@ import org.jcsp.lang.One2OneChannel;
 import org.jcsp.lang.Parallel;
 
 import uk.ac.napier.communicator.communication.messages.SimpleMessage;
-import uk.ac.napier.communicator.ui.EditTextComponent;
 import uk.ac.napier.communicator.ui.UIComponent;
 
 /**
@@ -22,14 +20,7 @@ public class Postie implements Runnable {
     public static final byte TASK_COMPLETE = 1;
 
     private static Postie instance = null;
-
-    public static synchronized Postie getInstance() {
-        if(instance == null) {
-            instance = new Postie();
-        }
-        return instance;
-    }
-
+    Thread thread = new Thread(this);
     private Handler handler = this.getHandler();
 
     private One2OneChannel inMessageSend = Channel.one2one();
@@ -40,11 +31,16 @@ public class Postie implements Runnable {
 
     private Parallel jobs = new Parallel();
 
-    Thread thread = new Thread(this);
-
     private Postie() {
         jobs.addProcess(messageProcess);
         jobs.addProcess(printProcess);
+    }
+
+    public static synchronized Postie getInstance() {
+        if (instance == null) {
+            instance = new Postie();
+        }
+        return instance;
     }
 
     public void start() {

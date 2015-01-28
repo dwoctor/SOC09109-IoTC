@@ -1,7 +1,5 @@
 package uk.ac.napier.communicator.communication.logistics;
 
-import android.widget.EditText;
-
 import org.jcsp.lang.CSProcess;
 import org.jcsp.lang.ChannelInput;
 
@@ -18,12 +16,12 @@ public class PrintProcess implements CSProcess {
     private final ChannelInput<String> in;
     private List<PrintProcessObserver> observers = new ArrayList<PrintProcessObserver>();
 
-    public void add(PrintProcessObserver observer) {
-        this.observers.add(observer);
-    }
-
     public PrintProcess(ChannelInput<String> in) {
         this.in = in;
+    }
+
+    public void add(PrintProcessObserver observer) {
+        this.observers.add(observer);
     }
 
     public void run() {

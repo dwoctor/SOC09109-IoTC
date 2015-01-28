@@ -1,5 +1,9 @@
 package uk.ac.napier.communicator;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.IntentFilter;
+import android.net.wifi.p2p.WifiP2pManager;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
@@ -8,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import uk.ac.napier.communicator.communication.connections.WiFi;
 import uk.ac.napier.communicator.communication.logistics.Postie;
 import uk.ac.napier.communicator.communication.messages.SimpleMessage;
 import uk.ac.napier.communicator.ui.EditTextComponent;
@@ -15,20 +20,46 @@ import uk.ac.napier.communicator.ui.EditTextComponent;
 
 public class Devices extends ActionBarActivity {
 
+    WifiP2pManager wifiManager;
+    WifiP2pManager.Channel wifiChannel;
+    BroadcastReceiver wifiReceiver;
+    IntentFilter wifiIntentFilter;
+    Postie pat;
     private Button startButton;
     private EditText startText;
-
-    Postie pat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_devices);
+
+        // Set up WiFi
+        this.wifiManager = (WifiP2pManager) getSystemService(Context.WIFI_P2P_SERVICE);
+        this.wifiChannel = this.wifiManager.initialize(this, getMainLooper(), null);
+        this.wifiReceiver = new WiFi(this.wifiManager, this.wifiChannel);
+        this.wifiIntentFilter = new IntentFilter();
+        this.wifiIntentFilter.addAction(WifiP2pManager.WIFI_P2P_STATE_CHANGED_ACTION);
+        this.wifiIntentFilter.addAction(WifiP2pManager.WIFI_P2P_PEERS_CHANGED_ACTION);
+        this.wifiIntentFilter.addAction(WifiP2pManager.WIFI_P2P_CONNECTION_CHANGED_ACTION);
+        this.wifiIntentFilter.addAction(WifiP2pManager.WIFI_P2P_THIS_DEVICE_CHANGED_ACTION);
+
         this.startButton = this.getStartButton();
         this.startText = this.getStartText();
         this.pat = Postie.getInstance();
         this.pat.getPrintProcess().add(new EditTextComponent(this.getStartText()));
         this.pat.start();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        registerReceiver(this.wifiReceiver, this.wifiIntentFilter); // register the broadcast receiver with the intent values to be matched
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        unregisterReceiver(this.wifiReceiver); // unregister the broadcast receiver
     }
 
 

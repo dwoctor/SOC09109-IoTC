@@ -15,7 +15,7 @@ public abstract class UIComponent {
     public void handleDecodeState(int state) {
         int outState;
         // Converts the decode state to the overall state.
-        switch(state) {
+        switch (state) {
             case DECODE_STATE_COMPLETED:
                 outState = Postie.TASK_COMPLETE;
                 break;
