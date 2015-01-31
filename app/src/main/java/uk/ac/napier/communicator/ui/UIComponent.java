@@ -2,9 +2,6 @@ package uk.ac.napier.communicator.ui;
 
 import uk.ac.napier.communicator.communication.logistics.Postie;
 
-/**
- * Created by David on 25/01/15.
- */
 public abstract class UIComponent {
 
     protected static final int DECODE_STATE_UNKNOWN = 0;

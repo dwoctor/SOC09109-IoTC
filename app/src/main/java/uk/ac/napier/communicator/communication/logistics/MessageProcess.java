@@ -6,9 +6,6 @@ import org.jcsp.lang.ChannelOutput;
 
 import uk.ac.napier.communicator.communication.messages.Message;
 
-/**
- * Created by David on 21/01/2015.
- */
 public class MessageProcess implements CSProcess {
 
     private final ChannelInput<Message> inSend;

@@ -13,9 +13,6 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by David on 21/01/2015.
- */
 public class HttpMessage implements MessageProtocol {
 
     private String url;

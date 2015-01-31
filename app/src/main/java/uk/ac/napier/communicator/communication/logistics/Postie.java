@@ -11,9 +11,6 @@ import org.jcsp.lang.Parallel;
 import uk.ac.napier.communicator.communication.messages.SimpleMessage;
 import uk.ac.napier.communicator.ui.UIComponent;
 
-/**
- * Created by David on 21/01/2015.
- */
 public class Postie implements Runnable {
 
     public static final byte TASK_UNKNOWN = 0;

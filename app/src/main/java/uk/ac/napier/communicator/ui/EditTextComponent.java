@@ -2,9 +2,6 @@ package uk.ac.napier.communicator.ui;
 
 import android.widget.EditText;
 
-/**
- * Created by David on 23/01/2015.
- */
 public class EditTextComponent extends UIComponent implements PrintProcessObserver {
 
     private EditText editText;

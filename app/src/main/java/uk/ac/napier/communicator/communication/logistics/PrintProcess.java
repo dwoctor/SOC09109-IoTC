@@ -8,9 +8,6 @@ import java.util.List;
 
 import uk.ac.napier.communicator.ui.PrintProcessObserver;
 
-/**
- * Created by David on 21/01/2015.
- */
 public class PrintProcess implements CSProcess {
 
     private final ChannelInput<String> in;

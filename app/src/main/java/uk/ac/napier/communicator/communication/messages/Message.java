@@ -2,9 +2,6 @@ package uk.ac.napier.communicator.communication.messages;
 
 import uk.ac.napier.communicator.communication.protocols.MessageProtocol;
 
-/**
- * Created by David on 21/01/2015.
- */
 public abstract class Message {
 
     private MessageProtocol messageProtocol;

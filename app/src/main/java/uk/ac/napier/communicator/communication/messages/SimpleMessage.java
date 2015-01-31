@@ -7,9 +7,6 @@ import com.google.gson.annotations.SerializedName;
 
 import uk.ac.napier.communicator.communication.protocols.SimpleMessageProtocol;
 
-/**
- * Created by David on 21/01/2015.
- */
 public class SimpleMessage extends uk.ac.napier.communicator.communication.messages.Message {
 
     @Expose
