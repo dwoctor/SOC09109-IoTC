@@ -3,11 +3,16 @@ package uk.ac.napier.communicator.communication.connections.wifi;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.wifi.p2p.WifiP2pConfig;
 import android.net.wifi.p2p.WifiP2pDevice;
 import android.net.wifi.p2p.WifiP2pDeviceList;
+import android.net.wifi.p2p.WifiP2pInfo;
 import android.net.wifi.p2p.WifiP2pManager;
+import android.net.wifi.p2p.WifiP2pManager.ActionListener;
 import android.net.wifi.p2p.WifiP2pManager.Channel;
+import android.net.wifi.p2p.WifiP2pManager.ConnectionInfoListener;
+import android.net.wifi.p2p.WifiP2pManager.PeerListListener;
 import android.util.Log;
 
 import java.util.HashMap;
@@ -15,23 +20,24 @@ import java.util.Iterator;
 import java.util.Map.Entry;
 
 import uk.ac.napier.communicator.R;
+import uk.ac.napier.communicator.communication.connections.wifi.handshake.HandshakeProcess;
 
 public class WiFi extends BroadcastReceiver {
 
-    public HashMap<String, WifiP2pDevice> connectedDevices = new HashMap<>();
+    private HashMap<String, WifiP2pDevice> connectedDevices = new HashMap<>();
     private WifiP2pManager manager;
     private Channel channel;
     private WifiP2pManager.PeerListListener peerListListener;
     private Context context;
+    private IntentFilter intentFilter;
 
     public WiFi(WifiP2pManager manager, Channel channel, Context context) {
         super();
         this.manager = manager;
         this.channel = channel;
-        this.peerListListener = new WifiP2pManager.PeerListListener() {
+        this.peerListListener = new PeerListListener() {
             @Override
             public void onPeersAvailable(WifiP2pDeviceList peers) {
-                //obtain a peer from the WifiP2pDeviceList
                 for (WifiP2pDevice device : peers.getDeviceList()) {
                     if (!connectedDevices.containsKey(device.deviceName)) {
                         connectTo(device);
@@ -43,27 +49,56 @@ public class WiFi extends BroadcastReceiver {
         this.discoverPeers();
     }
 
+    public WiFi(Context context) {
+        super();
+        this.context = context;
+        this.manager = (WifiP2pManager) this.context.getSystemService(Context.WIFI_P2P_SERVICE);
+        this.channel = this.manager.initialize(this.context, this.context.getMainLooper(), null);
+        intentFilter = new IntentFilter();
+        intentFilter.addAction(WifiP2pManager.WIFI_P2P_STATE_CHANGED_ACTION);
+        intentFilter.addAction(WifiP2pManager.WIFI_P2P_PEERS_CHANGED_ACTION);
+        intentFilter.addAction(WifiP2pManager.WIFI_P2P_CONNECTION_CHANGED_ACTION);
+        intentFilter.addAction(WifiP2pManager.WIFI_P2P_THIS_DEVICE_CHANGED_ACTION);
+        this.context.registerReceiver(this, this.intentFilter);
+        this.peerListListener = new PeerListListener() {
+            @Override
+            public void onPeersAvailable(WifiP2pDeviceList peers) {
+                for (WifiP2pDevice device : peers.getDeviceList()) {
+                    if (!connectedDevices.containsKey(device.deviceName)) {
+                        connectTo(device);
+                    }
+                }
+            }
+        };
+        this.discoverPeers();
+    }
+
     private void connectTo(final WifiP2pDevice device) {
         WifiP2pConfig config = new WifiP2pConfig();
         config.deviceAddress = device.deviceAddress;
-        this.manager.connect(this.channel, config, new WifiP2pManager.ActionListener() {
+        this.manager.connect(this.channel, config, new ActionListener() {
             @Override
             public void onSuccess() {
-                //success logic
                 Log.d(context.getString(R.string.log_wifi), String.format("WiFi connectTo Successful to %s", device.deviceName));
                 connectedDevices.put(device.deviceName, device);
+                manager.requestConnectionInfo(channel, new ConnectionInfoListener() {
+                    public void onConnectionInfoAvailable(WifiP2pInfo info) {
+                        HandshakeProcess p = HandshakeProcess.getInstance(context, info.groupOwnerAddress.getHostAddress(), 8888, 500);
+                        p.start();
+                        p.send(Device.getLocalDevice(context));
+                    }
+                });
             }
 
             @Override
             public void onFailure(int reason) {
-                //failure logic
                 Log.d(context.getString(R.string.log_wifi), "WiFi connectTo Failed");
             }
         });
     }
 
     private void discoverPeers() {
-        this.manager.discoverPeers(this.channel, new WifiP2pManager.ActionListener() {
+        this.manager.discoverPeers(this.channel, new ActionListener() {
             @Override
             public void onSuccess() {
                 // Code for when the discovery initiation is successful goes here.
