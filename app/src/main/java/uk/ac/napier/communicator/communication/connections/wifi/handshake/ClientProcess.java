@@ -6,65 +6,66 @@ import org.jcsp.lang.ChannelOutput;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
-import java.io.Serializable;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 
+import uk.ac.napier.communicator.communication.connections.wifi.devices.WifiDevice;
+
 public class ClientProcess implements CSProcess {
 
-    private final ChannelInput<Serializable> inChannel;
-    private final ChannelOutput<String> debugOutChannel, errorOutChannel;
+    private final ChannelInput<WifiDevice> inChannel;
+    private final ChannelOutput<String> debugOutChannel, errorOutChannel, infoOutChannel;
+
     private String groupHost;
     private Integer port;
     private Integer timeout;
     private Socket socket = new Socket();
 
-    public ClientProcess(String groupHost, Integer port, Integer timeout, ChannelInput<Serializable> inChannel, ChannelOutput<String> debugOutChannel, ChannelOutput<String> errorOutChannel) {
-        this.groupHost = groupHost;
-        this.port = port;
-        this.timeout = timeout;
+    public ClientProcess(ChannelInput<WifiDevice> inChannel, ChannelOutput<String> debugOutChannel, ChannelOutput<String> errorOutChannel, ChannelOutput<String> infoOutChannel) {
         this.inChannel = inChannel;
         this.debugOutChannel = debugOutChannel;
         this.errorOutChannel = errorOutChannel;
+        this.infoOutChannel = infoOutChannel;
     }
 
     public void run() {
         while (true) {
-            Serializable dataToSend = inChannel.read();
+            WifiDevice dataToSend = inChannel.read();
             try {
-                // Create a client socket with the host,
-                // port, and timeout information.
-                socket.bind(null);
-                socket.connect((new InetSocketAddress(this.groupHost, port)), timeout);
-
-                // Create a byte stream from a JPEG file and pipe it to the output stream
-                // of the socket. This data will be retrieved by the server device.
-                //OutputStream outputStream = socket.getOutputStream();
-
-                ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
-                outputStream.writeObject(dataToSend);
-
-                //ByteStreams.copy(inputStream, outputStream);
-
+                this.socket.connect((new InetSocketAddress(this.groupHost, this.port)), this.timeout);
+                ObjectOutputStream outputStream = new ObjectOutputStream(this.socket.getOutputStream());
+                outputStream.writeUTF(dataToSend.jsonize());
                 outputStream.close();
-
-                //inputStream.close();
+                this.infoOutChannel.write("client done");
             } catch (IOException e) {
                 this.errorOutChannel.write("WiFiClient error" + e.getMessage());
             } finally {
-                // Clean up any open sockets when done
-                // transferring or if an exception occurred.
-                if (socket != null) {
-                    if (socket.isConnected()) {
+                if (this.socket != null) {
+                    if (this.socket.isConnected()) {
                         try {
-                            socket.close();
+                            this.socket.close();
                         } catch (IOException e) {
-                            //catch logic
                             this.errorOutChannel.write("WiFiClient error" + e.getMessage());
                         }
                     }
                 }
             }
         }
+    }
+
+    public ClientProcess groupHost(String groupHost) {
+        this.groupHost = groupHost;
+        return this;
+    }
+
+    public ClientProcess port(Integer port) {
+        this.port = port;
+        return this;
+
+    }
+
+    public ClientProcess timeout(Integer timeout) {
+        this.timeout = timeout;
+        return this;
     }
 }

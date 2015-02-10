@@ -2,7 +2,7 @@ package uk.ac.napier.communicator.ui;
 
 import android.widget.EditText;
 
-public class EditTextComponent extends UIComponent implements PrintProcessObserver {
+public class EditTextComponent extends UiComponent implements PrintProcessObserver {
 
     private EditText editText;
     private String text;
@@ -13,7 +13,7 @@ public class EditTextComponent extends UIComponent implements PrintProcessObserv
 
     public void updateText(String text) {
         this.text = text;
-        this.handleDecodeState(UIComponent.DECODE_STATE_COMPLETED);
+        this.handleDecodeState(UiComponent.DECODE_STATE_COMPLETED);
     }
 
     public void updateUI() {

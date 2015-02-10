@@ -7,20 +7,20 @@ import org.jcsp.lang.Channel;
 import org.jcsp.lang.One2OneChannel;
 import org.jcsp.lang.Parallel;
 
-import java.io.Serializable;
-
 import uk.ac.napier.communicator.R;
 
 public class HandshakeProcess implements Runnable {
 
     private static HandshakeProcess instance = null;
+
     private Thread thread = new Thread(this);
 
-    private One2OneChannel inboundClient = Channel.one2one();
-    private One2OneChannel outboundServer = Channel.one2one();
+    private One2OneChannel client = Channel.one2one();
+    private One2OneChannel server = Channel.one2one();
 
-    private Any2OneChannel inboundDebugLogger = Channel.any2one();
-    private Any2OneChannel inboundErrorLogger = Channel.any2one();
+    private Any2OneChannel debugLogger = Channel.any2one();
+    private Any2OneChannel errorLogger = Channel.any2one();
+    private Any2OneChannel infoLogger = Channel.any2one();
 
     private ClientProcess clientProcess;
     private ServerProcess serverProcess;
@@ -28,22 +28,22 @@ public class HandshakeProcess implements Runnable {
 
     private Parallel jobs = new Parallel();
 
-    private HandshakeProcess(Context context, String groupHost, Integer port, Integer timeout) {
-        this.clientProcess = new ClientProcess(groupHost, port, timeout, inboundClient.in(), inboundDebugLogger.out(), inboundErrorLogger.out());
-        this.serverProcess = new ServerProcess(outboundServer.out(), inboundDebugLogger.out(), inboundErrorLogger.out());
-        this.loggerProcess = new LogProcess(context.getString(R.string.log_wifi), inboundDebugLogger.in(), inboundErrorLogger.in(), null, null, null);
-        jobs.addProcess(this.clientProcess);
-        jobs.addProcess(this.serverProcess);
-        jobs.addProcess(this.loggerProcess);
+    private HandshakeProcess(Context context) {
+        clientProcess = new ClientProcess(client.in(), debugLogger.out(), errorLogger.out(), infoLogger.out());
+        serverProcess = new ServerProcess(server.out(), debugLogger.out(), errorLogger.out(), infoLogger.out());
+        loggerProcess = new LogProcess(context.getString(R.string.log_wifi), debugLogger.in(), errorLogger.in(), infoLogger.in(), null, null);
+        jobs.addProcess(loggerProcess);
+        jobs.addProcess(clientProcess);
+        jobs.addProcess(serverProcess);
     }
 
     public static synchronized HandshakeProcess getInstance() {
         return instance;
     }
 
-    public static synchronized HandshakeProcess getInstance(Context context, String groupHost, Integer port, Integer timeout) {
+    public static synchronized HandshakeProcess getInstance(Context context) {
         if (instance == null) {
-            instance = new HandshakeProcess(context, groupHost, port, timeout);
+            instance = new HandshakeProcess(context);
         }
         return instance;
     }
@@ -54,12 +54,17 @@ public class HandshakeProcess implements Runnable {
         }
     }
 
-    public void send(Serializable data) {
-        this.inboundClient.out().write(data);
+    public void send(Object data) {
+        this.client.out().write(data);
     }
 
     @Override
     public void run() {
         jobs.run();
     }
+
+    public ClientProcess getClientProcess() {
+        return clientProcess;
+    }
+
 }

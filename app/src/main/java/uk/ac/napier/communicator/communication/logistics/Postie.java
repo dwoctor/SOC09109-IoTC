@@ -9,7 +9,7 @@ import org.jcsp.lang.One2OneChannel;
 import org.jcsp.lang.Parallel;
 
 import uk.ac.napier.communicator.communication.messages.SimpleMessage;
-import uk.ac.napier.communicator.ui.UIComponent;
+import uk.ac.napier.communicator.ui.UiComponent;
 
 public class Postie implements Runnable {
 
@@ -72,7 +72,7 @@ public class Postie implements Runnable {
                 @Override
                 public void handleMessage(Message inputMessage) {
                     // Gets the UIComponent from the incoming Message object.
-                    UIComponent uiComponent = (UIComponent) inputMessage.obj;
+                    UiComponent uiComponent = (UiComponent) inputMessage.obj;
                     switch (inputMessage.what) {
                         case TASK_COMPLETE:
                             uiComponent.updateUI();
@@ -88,7 +88,7 @@ public class Postie implements Runnable {
     }
 
     // Handle status messages from UIComponents.
-    public void handleState(UIComponent editText, int state) {
+    public void handleState(UiComponent editText, int state) {
         switch (state) {
             // The UIComponent finished.
             case TASK_COMPLETE:

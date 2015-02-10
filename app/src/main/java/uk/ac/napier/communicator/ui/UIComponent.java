@@ -2,7 +2,7 @@ package uk.ac.napier.communicator.ui;
 
 import uk.ac.napier.communicator.communication.logistics.Postie;
 
-public abstract class UIComponent {
+public abstract class UiComponent {
 
     protected static final int DECODE_STATE_UNKNOWN = 0;
     protected static final int DECODE_STATE_COMPLETED = 1;
