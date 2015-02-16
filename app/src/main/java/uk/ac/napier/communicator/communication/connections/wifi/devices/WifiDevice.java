@@ -44,7 +44,7 @@ public class WifiDevice extends Device implements Serializable {
             WifiInfo myWifiInfo = myWifiManager.getConnectionInfo();
             int ip = myWifiInfo.getIpAddress();
             String ipAddress = Formatter.formatIpAddress(ip);
-            String name = String.format("IoT-Android-%d", new Random().nextInt());
+            String name = String.format("IoT-Android-%d %s", new Random().nextInt(), ipAddress);
             WifiDevice.localDevice = new WifiDevice(name, ipAddress, myWifiInfo.getMacAddress());
         }
         return WifiDevice.localDevice;

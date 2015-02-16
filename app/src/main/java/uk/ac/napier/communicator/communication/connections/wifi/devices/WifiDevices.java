@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import uk.ac.napier.communicator.communication.devices.Device;
+
 public class WifiDevices implements Serializable {
 
     private static WifiDevices instance = null;
@@ -21,7 +23,7 @@ public class WifiDevices implements Serializable {
      * key: device name
      * value: device
      */
-    public HashMap<String, WifiDevice> knownDevicesTable;
+    private HashMap<String, WifiDevice> knownDevicesTable;
 
     private List<WifiDevicesObserver> observers = new ArrayList<WifiDevicesObserver>();
 
@@ -60,6 +62,18 @@ public class WifiDevices implements Serializable {
         gsonBuilder.excludeFieldsWithoutExposeAnnotation();
         Gson gson = gsonBuilder.create();
         return gson.toJson(this);
+    }
+
+    public Boolean exists(Device device) {
+        return this.knownDevicesTable.containsKey(device.getName());
+    }
+
+    public WifiDevice get(Device device) {
+        if (this.knownDevicesTable.containsKey(device.getName())) {
+            return this.knownDevicesTable.get(device.getName());
+        } else {
+            return null;
+        }
     }
 
     public void merge(WifiDevice wifiDeviceToMerge) {

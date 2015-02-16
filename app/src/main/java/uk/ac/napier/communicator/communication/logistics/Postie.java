@@ -1,36 +1,32 @@
 package uk.ac.napier.communicator.communication.logistics;
 
-import android.os.Handler;
-import android.os.Looper;
-import android.os.Message;
-
+import org.jcsp.lang.Any2OneChannel;
 import org.jcsp.lang.Channel;
 import org.jcsp.lang.One2OneChannel;
 import org.jcsp.lang.Parallel;
 
-import uk.ac.napier.communicator.communication.messages.SimpleMessage;
-import uk.ac.napier.communicator.ui.UiComponent;
+import uk.ac.napier.communicator.communication.messages.bidirectional.BidirectionalMessage;
+import uk.ac.napier.communicator.communication.messages.unidirectional.UnidirectionalMessage;
 
 public class Postie implements Runnable {
 
-    public static final byte TASK_UNKNOWN = 0;
-    public static final byte TASK_COMPLETE = 1;
-
     private static Postie instance = null;
-    Thread thread = new Thread(this);
-    private Handler handler = this.getHandler();
+    private Thread thread = new Thread(this);
 
-    private One2OneChannel inMessageSend = Channel.one2one();
-    private One2OneChannel outMessageResponse = Channel.one2one();
+    private One2OneChannel stuff2transmitBidirectional = Channel.one2one();
+    private One2OneChannel stuff2transmitUnidirectional = Channel.one2one();
+    private Any2OneChannel stuff2print = Channel.any2one();
 
-    private MessageProcess messageProcess = new MessageProcess(inMessageSend.in(), outMessageResponse.out());
-    private PrintProcess printProcess = new PrintProcess(outMessageResponse.in());
+    private TransmitterProcess transmitterProcess = new TransmitterProcess(stuff2transmitBidirectional.in(), stuff2transmitUnidirectional.in(), stuff2print.out());
+    private TcpReceiverProcess tcpReceiverProcess = new TcpReceiverProcess(stuff2print.out());
+    private PrintProcess printProcess = new PrintProcess(stuff2print.in());
 
     private Parallel jobs = new Parallel();
 
     private Postie() {
-        jobs.addProcess(messageProcess);
-        jobs.addProcess(printProcess);
+        this.jobs.addProcess(this.transmitterProcess);
+        this.jobs.addProcess(this.tcpReceiverProcess);
+        this.jobs.addProcess(this.printProcess);
     }
 
     public static synchronized Postie getInstance() {
@@ -46,16 +42,20 @@ public class Postie implements Runnable {
         }
     }
 
-    public MessageProcess getMessageProcess() {
-        return this.messageProcess;
+    public TransmitterProcess getTransmitterProcess() {
+        return this.transmitterProcess;
     }
 
     public PrintProcess getPrintProcess() {
         return this.printProcess;
     }
 
-    public void post(SimpleMessage message) {
-        this.inMessageSend.out().write(message);
+    public void post(BidirectionalMessage message) {
+        this.stuff2transmitBidirectional.out().write(message);
+    }
+
+    public void post(UnidirectionalMessage message) {
+        this.stuff2transmitUnidirectional.out().write(message);
     }
 
     @Override
@@ -63,39 +63,4 @@ public class Postie implements Runnable {
         jobs.run();
     }
 
-
-    // Sets up Handler for UIComponents to update UI elements in UIThread.
-    public Handler getHandler() {
-        if (this.handler == null) {
-            this.handler = new Handler(Looper.getMainLooper()) {
-                // handleMessage() defines the operations to perform when the Handler receives a new Message to process.
-                @Override
-                public void handleMessage(Message inputMessage) {
-                    // Gets the UIComponent from the incoming Message object.
-                    UiComponent uiComponent = (UiComponent) inputMessage.obj;
-                    switch (inputMessage.what) {
-                        case TASK_COMPLETE:
-                            uiComponent.updateUI();
-                            break;
-                        default:
-                            // Pass along other messages from the UI.
-                            super.handleMessage(inputMessage);
-                    }
-                }
-            };
-        }
-        return this.handler;
-    }
-
-    // Handle status messages from UIComponents.
-    public void handleState(UiComponent editText, int state) {
-        switch (state) {
-            // The UIComponent finished.
-            case TASK_COMPLETE:
-                // Creates a message for the Handler with the state and the UIComponent object.
-                Message completeMessage = this.handler.obtainMessage(state, editText);
-                completeMessage.sendToTarget();
-                break;
-        }
-    }
 }

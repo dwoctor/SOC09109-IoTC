@@ -2,55 +2,47 @@ package uk.ac.napier.communicator;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 
 import uk.ac.napier.communicator.communication.connections.wifi.WifiManager;
+import uk.ac.napier.communicator.communication.connections.wifi.devices.WifiDevice;
 import uk.ac.napier.communicator.communication.devices.Device;
 import uk.ac.napier.communicator.communication.devices.Devices;
+import uk.ac.napier.communicator.communication.logistics.Postie;
+import uk.ac.napier.communicator.communication.messages.unidirectional.BinaryMessage;
+import uk.ac.napier.communicator.ui.EditTextComponent;
 
 public class WifiTest extends ActionBarActivity {
 
-    //WifiP2pManager wifiManager;
-    //Channel wifiChannel;
-    //BroadcastReceiver wifiReceiver;
-    //IntentFilter wifiIntentFilter;
-
     WifiManager wifi;
-
     ListView devicesListView;
     ArrayAdapter devicesAdapter;
+    EditText incomingMessagesEditText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wi_fi_test);
 
-        //this.wifiManager = (WifiP2pManager) getSystemService(Context.WIFI_P2P_SERVICE);
-        //this.wifiChannel = this.wifiManager.initialize(this, getMainLooper(), null);
-        //this.wifiReceiver = new WiFi(this.wifiManager, this.wifiChannel, this);
-
-        //wifiIntentFilter = new IntentFilter();
-        //wifiIntentFilter.addAction(WifiP2pManager.WIFI_P2P_STATE_CHANGED_ACTION);
-        //wifiIntentFilter.addAction(WifiP2pManager.WIFI_P2P_PEERS_CHANGED_ACTION);
-        //wifiIntentFilter.addAction(WifiP2pManager.WIFI_P2P_CONNECTION_CHANGED_ACTION);
-        //wifiIntentFilter.addAction(WifiP2pManager.WIFI_P2P_THIS_DEVICE_CHANGED_ACTION);
-
         this.wifi = new WifiManager(this);
+        Postie.getInstance().getPrintProcess().add(new EditTextComponent(this.getIncomingMessagesEditText()));
+        Postie.getInstance().start();
         this.devicesListView = getDevicesListView();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        //registerReceiver(this.wifiReceiver, this.wifiIntentFilter);
         this.wifi.register();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        //unregisterReceiver(this.wifiReceiver);
         this.wifi.unregister();
     }
 
@@ -58,6 +50,20 @@ public class WifiTest extends ActionBarActivity {
         if (this.devicesListView == null) {
             ListView devicesListView = (ListView) findViewById(R.id.devices);
             devicesListView.setAdapter(this.getDevicesListAdapter());
+            devicesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Device item = (Device) parent.getAdapter().getItem(position);
+                    if (item.isWifiDevice()) {
+                        WifiDevice wifiDevice = item.getWifiInfo();
+                        try {
+                            Postie.getInstance().post(new BinaryMessage(wifiDevice.getIp(), 9999, 500, item.toString().getBytes()));
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            });
             this.devicesListView = devicesListView;
         }
         return this.devicesListView;
@@ -69,5 +75,13 @@ public class WifiTest extends ActionBarActivity {
             Devices.getInstance().setDevicesAdapter(this.devicesAdapter);
         }
         return this.devicesAdapter;
+    }
+
+    private EditText getIncomingMessagesEditText() {
+        if (this.incomingMessagesEditText == null) {
+            EditText incomingMessagesEditText = (EditText) findViewById(R.id.incomingMessages);
+            this.incomingMessagesEditText = incomingMessagesEditText;
+        }
+        return this.incomingMessagesEditText;
     }
 }

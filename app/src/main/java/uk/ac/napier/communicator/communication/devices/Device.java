@@ -7,6 +7,9 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
+import uk.ac.napier.communicator.communication.connections.wifi.devices.WifiDevice;
+import uk.ac.napier.communicator.communication.connections.wifi.devices.WifiDevices;
+
 public abstract class Device implements Serializable {
 
     @Expose
@@ -39,5 +42,13 @@ public abstract class Device implements Serializable {
         gsonBuilder.excludeFieldsWithoutExposeAnnotation();
         Gson gson = gsonBuilder.create();
         return gson.toJson(this);
+    }
+
+    public Boolean isWifiDevice() {
+        return WifiDevices.getInstance().exists(this);
+    }
+
+    public WifiDevice getWifiInfo() {
+        return WifiDevices.getInstance().get(this);
     }
 }

@@ -16,8 +16,6 @@ import android.net.wifi.p2p.WifiP2pManager.PeerListListener;
 import android.util.Log;
 
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map.Entry;
 
 import uk.ac.napier.communicator.R;
 import uk.ac.napier.communicator.communication.connections.wifi.devices.WifiDevice;
@@ -33,25 +31,6 @@ public class WifiManager extends BroadcastReceiver {
     private Context context;
     private IntentFilter intentFilter;
 
-    public WifiManager(WifiP2pManager manager, Channel channel, Context context) {
-        super();
-        this.manager = manager;
-        this.channel = channel;
-        this.peerListListener = new PeerListListener() {
-            @Override
-            public void onPeersAvailable(WifiP2pDeviceList peers) {
-                for (WifiP2pDevice device : peers.getDeviceList()) {
-                    if (!connectedDevices.containsKey(device.deviceName)) {
-                        connectTo(device);
-                    }
-                }
-            }
-        };
-        this.context = context;
-        this.discoverPeers();
-        HandshakeProcess.getInstance(context).start();
-    }
-
     public WifiManager(Context context) {
         super();
         this.context = context;
@@ -66,9 +45,9 @@ public class WifiManager extends BroadcastReceiver {
             @Override
             public void onPeersAvailable(WifiP2pDeviceList peers) {
                 for (WifiP2pDevice device : peers.getDeviceList()) {
-                    if (!connectedDevices.containsKey(device.deviceName)) {
-                        connectTo(device);
-                    }
+//                    if (!connectedDevices.containsKey(device.deviceName)) {
+                    connectTo(device);
+//                    }
                 }
             }
         };
@@ -156,18 +135,6 @@ public class WifiManager extends BroadcastReceiver {
                 }
                 break;
             case WifiP2pManager.WIFI_P2P_CONNECTION_CHANGED_ACTION: // Respond to new connection or disconnections
-                Iterator deviceIterator = this.connectedDevices.entrySet().iterator();
-                while (deviceIterator.hasNext()) {
-                    Entry<String, WifiP2pDevice> device = (Entry<String, WifiP2pDevice>) deviceIterator.next();
-                    switch (device.getValue().status) {
-                        case WifiP2pDevice.INVITED:
-                        case WifiP2pDevice.FAILED:
-                        case WifiP2pDevice.AVAILABLE:
-                        case WifiP2pDevice.UNAVAILABLE:
-                            this.connectedDevices.remove(device.getKey());
-                            deviceIterator.remove();
-                    }
-                }
                 break;
             case WifiP2pManager.WIFI_P2P_THIS_DEVICE_CHANGED_ACTION: // Respond to this device's wifi state changing
                 break;

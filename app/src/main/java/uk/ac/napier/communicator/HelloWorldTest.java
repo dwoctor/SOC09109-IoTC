@@ -7,12 +7,11 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import uk.ac.napier.communicator.communication.logistics.Postie;
-import uk.ac.napier.communicator.communication.messages.SimpleMessage;
+import uk.ac.napier.communicator.communication.messages.bidirectional.SimpleMessage;
 import uk.ac.napier.communicator.ui.EditTextComponent;
 
 public class HelloWorldTest extends ActionBarActivity {
 
-    Postie pat;
     private Button startButton;
     private EditText startText;
 
@@ -22,9 +21,8 @@ public class HelloWorldTest extends ActionBarActivity {
         setContentView(R.layout.activity_hello_test);
         this.startButton = this.getStartButton();
         this.startText = this.getStartText();
-        this.pat = Postie.getInstance();
-        this.pat.getPrintProcess().add(new EditTextComponent(this.getStartText()));
-        this.pat.start();
+        Postie.getInstance().getPrintProcess().add(new EditTextComponent(this.getStartText()));
+        Postie.getInstance().start();
     }
 
     private Button getStartButton() {
@@ -32,9 +30,8 @@ public class HelloWorldTest extends ActionBarActivity {
             Button startButton = (Button) findViewById(R.id.startButton);
             startButton.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    // Perform action on click
                     try {
-                        pat.post(new SimpleMessage());
+                        Postie.getInstance().post(new SimpleMessage());
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

@@ -8,6 +8,7 @@ import org.jcsp.lang.One2OneChannel;
 import org.jcsp.lang.Parallel;
 
 import uk.ac.napier.communicator.R;
+import uk.ac.napier.communicator.communication.connections.wifi.devices.WifiDevice;
 
 public class HandshakeProcess implements Runnable {
 
@@ -54,7 +55,7 @@ public class HandshakeProcess implements Runnable {
         }
     }
 
-    public void send(Object data) {
+    public void send(WifiDevice data) {
         this.client.out().write(data);
     }
 

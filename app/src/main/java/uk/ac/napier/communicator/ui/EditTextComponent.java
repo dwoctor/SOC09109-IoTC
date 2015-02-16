@@ -13,7 +13,7 @@ public class EditTextComponent extends UiComponent implements PrintProcessObserv
 
     public void updateText(String text) {
         this.text = text;
-        this.handleDecodeState(UiComponent.DECODE_STATE_COMPLETED);
+        this.handleState(UiComponent.UPDATED);
     }
 
     public void updateUI() {

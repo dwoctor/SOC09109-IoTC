@@ -61,7 +61,6 @@ public class ClientProcess implements CSProcess {
     public ClientProcess port(Integer port) {
         this.port = port;
         return this;
-
     }
 
     public ClientProcess timeout(Integer timeout) {
