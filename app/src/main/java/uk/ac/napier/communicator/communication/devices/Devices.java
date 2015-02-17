@@ -17,7 +17,7 @@ public class Devices implements WifiDevicesObserver {
 
     private Devices() {
         this.devices = new ArrayList<Device>();
-        WifiDevices.getInstance().addObserver(this);
+        WifiDevices.getInstance().addObservers(this);
     }
 
     public static synchronized Devices getInstance() {

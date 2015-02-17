@@ -7,6 +7,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -43,14 +44,21 @@ public class WifiDevices implements Serializable {
         return gson.fromJson(json, WifiDevices.class);
     }
 
-    public void addObserver(WifiDevicesObserver observer) {
-        this.observers.add(observer);
+
+    /**
+     * Add {@link uk.ac.napier.communicator.communication.connections.wifi.devices.WifiDevicesObserver observer(s)} to observe {@link uk.ac.napier.communicator.communication.connections.wifi.devices.WifiDevices this} object for new {@link uk.ac.napier.communicator.communication.connections.wifi.devices.WifiDevice devices}.
+     *
+     * @param observers One or Many {@link uk.ac.napier.communicator.communication.connections.wifi.devices.WifiDevicesObserver observers} to be added.
+     */
+    public void addObservers(WifiDevicesObserver... observers) {
+        this.observers.addAll(Arrays.asList(observers));
     }
 
-    public void removeObserver(WifiDevicesObserver observer) {
-        this.observers.remove(observer);
-    }
-
+    /**
+     * Updates the {@link uk.ac.napier.communicator.communication.connections.wifi.devices.WifiDevicesObserver observers} of the new {@link uk.ac.napier.communicator.communication.connections.wifi.devices.WifiDevice device}.
+     *
+     * @param wifiDevice The {@link uk.ac.napier.communicator.communication.connections.wifi.devices.WifiDevice device} to be sent to the {@link uk.ac.napier.communicator.communication.connections.wifi.devices.WifiDevicesObserver observers}.
+     */
     private void updateObservers(WifiDevice wifiDevice) {
         for (WifiDevicesObserver observer : this.observers) {
             observer.update(wifiDevice);
