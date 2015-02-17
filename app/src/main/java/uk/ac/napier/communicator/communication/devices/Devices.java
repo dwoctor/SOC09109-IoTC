@@ -1,26 +1,22 @@
 package uk.ac.napier.communicator.communication.devices;
 
-import android.os.Handler;
-import android.os.Looper;
-import android.os.Message;
-import android.widget.ArrayAdapter;
-
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import uk.ac.napier.communicator.communication.connections.wifi.devices.WifiDevice;
 import uk.ac.napier.communicator.communication.connections.wifi.devices.WifiDevices;
 import uk.ac.napier.communicator.communication.connections.wifi.devices.WifiDevicesObserver;
+import uk.ac.napier.communicator.ui.UiComponentUpdate;
 
 public class Devices implements WifiDevicesObserver {
 
     private static Devices instance = null;
     private ArrayList<Device> devices;
-    private ArrayAdapter devicesAdapter;
-    private Handler handler;
+    private List<UiComponentUpdate> observers = new ArrayList<UiComponentUpdate>();
 
     private Devices() {
         this.devices = new ArrayList<Device>();
-        this.handler = this.getHandler();
         WifiDevices.getInstance().addObserver(this);
     }
 
@@ -31,30 +27,32 @@ public class Devices implements WifiDevicesObserver {
         return instance;
     }
 
+    /**
+     * Add an {@link uk.ac.napier.communicator.ui.UiComponentUpdate observer} to observe {@link uk.ac.napier.communicator.communication.devices.Devices this} object.
+     *
+     * @param observers One or Many {@link uk.ac.napier.communicator.ui.UiComponentUpdate observers} to be added.
+     */
+    public void addObservers(UiComponentUpdate... observers) {
+        this.observers.addAll(Arrays.asList(observers));
+    }
+
+    /**
+     * Updates the {@link uk.ac.napier.communicator.ui.UiComponentUpdate observers} of {@link uk.ac.napier.communicator.communication.devices.Devices this} object.
+     */
+    private void updateObservers() {
+        for (UiComponentUpdate observer : this.observers) {
+            observer.update();
+        }
+    }
+
     @Override
     public void update(WifiDevice device) {
         devices.add(device);
-        Message completeMessage = this.handler.obtainMessage();
-        completeMessage.sendToTarget();
+        this.updateObservers();
     }
 
     public ArrayList<Device> getDevices() {
         return devices;
     }
 
-    public void setDevicesAdapter(ArrayAdapter devicesAdapter) {
-        this.devicesAdapter = devicesAdapter;
-    }
-
-    public Handler getHandler() {
-        if (this.handler == null) {
-            this.handler = new Handler(Looper.getMainLooper()) {
-                @Override
-                public void handleMessage(Message inputMessage) {
-                    devicesAdapter.notifyDataSetChanged();
-                }
-            };
-        }
-        return this.handler;
-    }
 }

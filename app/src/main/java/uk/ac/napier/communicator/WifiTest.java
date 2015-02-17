@@ -14,6 +14,7 @@ import uk.ac.napier.communicator.communication.devices.Device;
 import uk.ac.napier.communicator.communication.devices.Devices;
 import uk.ac.napier.communicator.communication.logistics.Postie;
 import uk.ac.napier.communicator.communication.messages.unidirectional.BinaryMessage;
+import uk.ac.napier.communicator.ui.ArrayAdapterComponent;
 import uk.ac.napier.communicator.ui.EditTextComponent;
 
 public class WifiTest extends ActionBarActivity {
@@ -71,8 +72,9 @@ public class WifiTest extends ActionBarActivity {
 
     private ArrayAdapter getDevicesListAdapter() {
         if (this.devicesAdapter == null) {
-            this.devicesAdapter = new ArrayAdapter<Device>(this, android.R.layout.simple_list_item_1, Devices.getInstance().getDevices());
-            Devices.getInstance().setDevicesAdapter(this.devicesAdapter);
+            ArrayAdapter devicesAdapter = new ArrayAdapter<Device>(this, android.R.layout.simple_list_item_1, Devices.getInstance().getDevices());
+            Devices.getInstance().addObservers(new ArrayAdapterComponent(devicesAdapter));
+            this.devicesAdapter = devicesAdapter;
         }
         return this.devicesAdapter;
     }
