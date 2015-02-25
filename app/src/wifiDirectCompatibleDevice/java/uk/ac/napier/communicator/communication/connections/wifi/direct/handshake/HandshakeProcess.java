@@ -1,8 +1,6 @@
 package uk.ac.napier.communicator.communication.connections.wifi.direct.handshake;
 
-import android.annotation.TargetApi;
 import android.content.Context;
-import android.os.Build;
 
 import org.jcsp.lang.Any2OneChannel;
 import org.jcsp.lang.Channel;

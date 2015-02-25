@@ -8,8 +8,8 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 
-import uk.ac.napier.communicator.communication.connections.wifi.local.WifiManager;
 import uk.ac.napier.communicator.communication.connections.wifi.devices.WifiDevice;
+import uk.ac.napier.communicator.communication.connections.wifi.local.WifiManager;
 import uk.ac.napier.communicator.communication.devices.Device;
 import uk.ac.napier.communicator.communication.devices.Devices;
 import uk.ac.napier.communicator.communication.logistics.Postie;

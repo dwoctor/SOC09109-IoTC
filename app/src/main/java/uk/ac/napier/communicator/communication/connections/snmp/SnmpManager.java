@@ -13,7 +13,6 @@ import org.snmp4j.smi.OID;
 import org.snmp4j.smi.OctetString;
 import org.snmp4j.smi.VariableBinding;
 import org.snmp4j.transport.DefaultTcpTransportMapping;
-import org.snmp4j.transport.DefaultUdpTransportMapping;
 
 import java.io.IOException;
 
@@ -52,7 +51,7 @@ public class SnmpManager {
         }
         pdu.setType(PDU.GET);
         ResponseEvent event = this.snmp.send(pdu, getTarget(), null);
-        if(event != null) {
+        if (event != null) {
             return event;
         }
         throw new RuntimeException("GET timed out");
