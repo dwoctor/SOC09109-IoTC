@@ -1,6 +1,9 @@
 package uk.ac.napier.communicator;
 
+import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
@@ -9,14 +12,14 @@ import android.widget.Button;
 public class Tests extends ActionBarActivity {
 
     private Button helloTestButton;
-    private Button wifiTestButton;
+    private Button wifiLocalTestButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tests);
         this.helloTestButton = this.getHelloTestButton();
-        this.wifiTestButton = this.getWifiTestButton();
+        this.wifiLocalTestButton = this.getWifiLocalTestButton();
     }
 
     private Button getHelloTestButton() {
@@ -33,17 +36,17 @@ public class Tests extends ActionBarActivity {
         return this.helloTestButton;
     }
 
-    private Button getWifiTestButton() {
-        if (this.wifiTestButton == null) {
-            Button wifiTestButton = (Button) findViewById(R.id.buttonWiFiTest);
-            wifiTestButton.setOnClickListener(new View.OnClickListener() {
+    private Button getWifiLocalTestButton() {
+        if (this.wifiLocalTestButton == null) {
+            Button wifiLocalTestButton = (Button) findViewById(R.id.buttonWifiLocalTest);
+            wifiLocalTestButton.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    Intent wifiTestIntent = new Intent(Tests.this, WifiTest.class);
+                    Intent wifiTestIntent = new Intent(Tests.this, WifiLocalTest.class);
                     Tests.this.startActivity(wifiTestIntent);
                 }
             });
-            this.wifiTestButton = wifiTestButton;
+            this.wifiLocalTestButton = wifiLocalTestButton;
         }
-        return this.wifiTestButton;
+        return this.wifiLocalTestButton;
     }
 }

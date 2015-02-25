@@ -7,7 +7,7 @@
     <string name="title_activity_hello_world_test">Hello World!</string>
     <string name="hello_world">Hello world!</string>
     <string name="this_will_change">This will Change</string>
-    <string name="title_activity_wifi_test">WiFiTest</string>
+    <string name="title_activity_wifi_local_test">WiFiLocalTest</string>
     <string name="log_wifi">WiFi</string>
 
 </resources>

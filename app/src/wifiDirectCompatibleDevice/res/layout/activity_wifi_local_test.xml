@@ -6,29 +6,30 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="uk.ac.napier.communicator.Tests">
+    tools:context="uk.ac.napier.communicator.WifiLocalTest">
 
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:orientation="vertical">
+        android:layout_centerVertical="true"
+        android:orientation="vertical"
+        android:weightSum="1">
 
-        <Button
-            android:id="@+id/buttonHelloTest"
-            android:layout_width="fill_parent"
+        <ListView
+            android:id="@+id/devices"
+            android:layout_width="match_parent"
+            android:layout_height="361dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="1.00" />
+
+        <EditText
+            android:id="@+id/incomingMessages"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:text="Hello Test" />
-
-        <Button
-            android:id="@+id/buttonWifiLocalTest"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="WiFi Local Test" />
-
+            android:editable="false"
+            android:inputType="none" />
     </LinearLayout>
 
 </RelativeLayout>

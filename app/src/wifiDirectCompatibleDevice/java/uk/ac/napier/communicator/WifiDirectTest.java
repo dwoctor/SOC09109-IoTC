@@ -8,7 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 
-import uk.ac.napier.communicator.communication.connections.wifi.WifiManager;
+import uk.ac.napier.communicator.communication.connections.wifi.direct.WifiManager;
 import uk.ac.napier.communicator.communication.connections.wifi.devices.WifiDevice;
 import uk.ac.napier.communicator.communication.devices.Device;
 import uk.ac.napier.communicator.communication.devices.Devices;
@@ -17,7 +17,7 @@ import uk.ac.napier.communicator.communication.messages.unidirectional.BinaryMes
 import uk.ac.napier.communicator.ui.ArrayAdapterComponent;
 import uk.ac.napier.communicator.ui.EditTextComponent;
 
-public class WifiTest extends ActionBarActivity {
+public class WifiDirectTest extends ActionBarActivity {
 
     WifiManager wifi;
     ListView devicesListView;
@@ -27,7 +27,7 @@ public class WifiTest extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_wi_fi_test);
+        setContentView(R.layout.activity_wifi_direct_test);
 
         this.wifi = new WifiManager(this);
         Postie.getInstance().getPrintProcess().add(new EditTextComponent(this.getIncomingMessagesEditText()));

@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Communicator.iml" filepath="$PROJECT_DIR$/Communicator.iml" />
       <module fileurl="file://$PROJECT_DIR$/SOC09109-IoTC.iml" filepath="$PROJECT_DIR$/SOC09109-IoTC.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>

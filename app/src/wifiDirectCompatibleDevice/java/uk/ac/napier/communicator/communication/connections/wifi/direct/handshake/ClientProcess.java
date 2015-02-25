@@ -1,4 +1,7 @@
-package uk.ac.napier.communicator.communication.connections.wifi.handshake;
+package uk.ac.napier.communicator.communication.connections.wifi.direct.handshake;
+
+import android.annotation.TargetApi;
+import android.os.Build;
 
 import org.jcsp.lang.CSProcess;
 import org.jcsp.lang.ChannelInput;

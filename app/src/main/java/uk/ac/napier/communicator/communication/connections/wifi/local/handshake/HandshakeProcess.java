@@ -1,4 +1,4 @@
-package uk.ac.napier.communicator.communication.connections.wifi.handshake;
+package uk.ac.napier.communicator.communication.connections.wifi.local.handshake;
 
 import android.content.Context;
 
@@ -24,18 +24,15 @@ public class HandshakeProcess implements Runnable {
     private Any2OneChannel infoLogger = Channel.any2one();
 
     private ClientProcess clientProcess;
-    private ServerProcess serverProcess;
     private LogProcess loggerProcess;
 
     private Parallel jobs = new Parallel();
 
     private HandshakeProcess(Context context) {
         clientProcess = new ClientProcess(client.in(), debugLogger.out(), errorLogger.out(), infoLogger.out());
-        serverProcess = new ServerProcess(server.out(), debugLogger.out(), errorLogger.out(), infoLogger.out());
         loggerProcess = new LogProcess(context.getString(R.string.log_wifi), debugLogger.in(), errorLogger.in(), infoLogger.in(), null, null);
         jobs.addProcess(loggerProcess);
         jobs.addProcess(clientProcess);
-        jobs.addProcess(serverProcess);
     }
 
     public static synchronized HandshakeProcess getInstance() {

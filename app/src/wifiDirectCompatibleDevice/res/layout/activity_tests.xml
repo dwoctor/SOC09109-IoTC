@@ -23,6 +23,13 @@
             android:text="Hello Test" />
 
         <Button
+            android:id="@+id/buttonWifiDirectTest"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="WiFi Direct Test" />
+
+        <Button
             android:id="@+id/buttonWifiLocalTest"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
