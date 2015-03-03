@@ -1,11 +1,14 @@
 package uk.ac.napier.communicator.communication.connections.wifi.local.handshake;
 
+import com.google.common.base.Charsets;
+import com.google.common.io.CharStreams;
+
 import org.jcsp.lang.CSProcess;
 import org.jcsp.lang.ChannelInput;
 import org.jcsp.lang.ChannelOutput;
 
 import java.io.IOException;
-import java.io.ObjectInputStream;
+import java.io.InputStreamReader;
 import java.io.ObjectOutputStream;
 import java.net.InetSocketAddress;
 import java.net.Socket;
@@ -21,7 +24,6 @@ public class ClientProcess implements CSProcess {
     private String groupHost;
     private Integer port;
     private Integer timeout;
-    private Socket socket = new Socket();
 
     public ClientProcess(ChannelInput<WifiDevice> inChannel, ChannelOutput<String> debugOutChannel, ChannelOutput<String> errorOutChannel, ChannelOutput<String> infoOutChannel) {
         this.inChannel = inChannel;
@@ -33,30 +35,36 @@ public class ClientProcess implements CSProcess {
     public void run() {
         while (true) {
             WifiDevice dataToSend = inChannel.read();
+            this.infoOutChannel.write("ClientProcess Started");
+            Socket socket = new Socket();
             try {
-                this.socket.connect((new InetSocketAddress(this.groupHost, this.port)), this.timeout);
-                ObjectOutputStream outputStream = new ObjectOutputStream(this.socket.getOutputStream());
-                outputStream.writeUTF(dataToSend.jsonize());
-                outputStream.close();
-                ObjectInputStream reader = new ObjectInputStream(this.socket.getInputStream());
+                socket.connect((new InetSocketAddress(this.groupHost, this.port)), this.timeout);
+                this.infoOutChannel.write("ClientProcess Writing");
+                ObjectOutputStream writer = new ObjectOutputStream(socket.getOutputStream());
                 try {
-                    WifiDevices.getInstance().merge(WifiDevice.dejsonize(reader.readUTF()));
-                    this.infoOutChannel.write("Merged Devices List");
+                    writer.writeUTF(dataToSend.jsonize());
                 } catch (Exception e) {
-                    this.errorOutChannel.write("WiFiServer error" + e.getMessage());
-                } finally {
-                    reader.close();
+                    this.errorOutChannel.write("WiFiLocal ClientProcess (writer) error" + e.getMessage());
                 }
-                this.infoOutChannel.write("client done");
-            } catch (IOException e) {
-                this.errorOutChannel.write("WiFiClient error" + e.getMessage());
+                this.infoOutChannel.write("ClientProcess Reading");
+                InputStreamReader reader = new InputStreamReader(socket.getInputStream(), Charsets.UTF_8);
+                try {
+                    String data = CharStreams.toString(reader);
+                    WifiDevices.getInstance().merge(WifiDevice.dejsonize(data));
+                    this.debugOutChannel.write(data);
+                } catch (Exception e) {
+                    this.errorOutChannel.write("WiFiLocal ClientProcess (reader) error" + e.getMessage());
+                }
+                this.infoOutChannel.write("ClientProcess Done");
+            } catch (Exception e) {
+                this.errorOutChannel.write("WiFiLocal ClientProcess (unknown) error" + e.getMessage());
             } finally {
-                if (this.socket != null) {
-                    if (this.socket.isConnected()) {
+                if (socket != null) {
+                    if (socket.isConnected()) {
                         try {
-                            this.socket.close();
+                            socket.close();
                         } catch (IOException e) {
-                            this.errorOutChannel.write("WiFiClient error" + e.getMessage());
+                            this.errorOutChannel.write("WiFiLocal ClientProcess (close) error" + e.getMessage());
                         }
                     }
                 }

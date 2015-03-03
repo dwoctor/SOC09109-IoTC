@@ -9,9 +9,6 @@ import org.jcsp.lang.Parallel;
 
 import uk.ac.napier.communicator.R;
 import uk.ac.napier.communicator.communication.connections.wifi.devices.WifiDevice;
-import uk.ac.napier.communicator.communication.connections.wifi.direct.handshake.ClientProcess;
-import uk.ac.napier.communicator.communication.connections.wifi.direct.handshake.LogProcess;
-import uk.ac.napier.communicator.communication.connections.wifi.direct.handshake.ServerProcess;
 
 public class HandshakeProcess implements Runnable {
 

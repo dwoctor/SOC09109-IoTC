@@ -29,10 +29,13 @@ public class WifiLocalTest extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wifi_local_test);
 
+        // Set up GUI
+        this.devicesListView = getDevicesListView();
+
+        // Set up Wifi
         this.wifi = new WifiManager(this);
         Postie.getInstance().getPrintProcess().add(new EditTextComponent(this.getIncomingMessagesEditText()));
         Postie.getInstance().start();
-        this.devicesListView = getDevicesListView();
     }
 
     private ListView getDevicesListView() {
