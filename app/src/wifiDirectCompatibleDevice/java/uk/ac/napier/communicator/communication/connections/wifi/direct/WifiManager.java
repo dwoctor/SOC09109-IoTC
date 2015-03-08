@@ -1,6 +1,5 @@
 package uk.ac.napier.communicator.communication.connections.wifi.direct;
 
-import android.annotation.TargetApi;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -14,7 +13,6 @@ import android.net.wifi.p2p.WifiP2pManager.ActionListener;
 import android.net.wifi.p2p.WifiP2pManager.Channel;
 import android.net.wifi.p2p.WifiP2pManager.ConnectionInfoListener;
 import android.net.wifi.p2p.WifiP2pManager.PeerListListener;
-import android.os.Build;
 import android.util.Log;
 
 import java.util.HashMap;
@@ -23,7 +21,6 @@ import uk.ac.napier.communicator.R;
 import uk.ac.napier.communicator.communication.connections.wifi.direct.handshake.HandshakeProcess;
 import uk.ac.napier.communicator.communication.devices.WifiDevice;
 
-@TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
 public class WifiManager extends BroadcastReceiver {
 
     private HashMap<String, WifiP2pDevice> connectedDevices = new HashMap<>();
