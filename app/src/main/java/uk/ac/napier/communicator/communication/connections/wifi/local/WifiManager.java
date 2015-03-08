@@ -23,7 +23,7 @@ public class WifiManager {
 
     private void discoverPeer(String ip) {
         HandshakeProcess.getInstance(this.context).start();
-        HandshakeProcess.getInstance().getClientProcess().address(ip).port(9999).timeout(500);
+        HandshakeProcess.getInstance().getClientProcess().address(ip).port(1111).timeout(500);
         HandshakeProcess.getInstance().send(WifiDevice.getLocalDevice(this.context));
     }
 }
