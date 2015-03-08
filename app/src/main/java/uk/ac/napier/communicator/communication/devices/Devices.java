@@ -4,9 +4,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import uk.ac.napier.communicator.communication.connections.wifi.devices.WifiDevice;
-import uk.ac.napier.communicator.communication.connections.wifi.devices.WifiDevices;
-import uk.ac.napier.communicator.communication.connections.wifi.devices.WifiDevicesObserver;
 import uk.ac.napier.communicator.ui.UiComponentUpdate;
 
 public class Devices implements WifiDevicesObserver {

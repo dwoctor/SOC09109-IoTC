@@ -7,8 +7,8 @@ import java.io.ObjectInputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-import uk.ac.napier.communicator.communication.connections.wifi.devices.WifiDevice;
-import uk.ac.napier.communicator.communication.connections.wifi.devices.WifiDevices;
+import uk.ac.napier.communicator.communication.devices.WifiDevice;
+import uk.ac.napier.communicator.communication.devices.WifiDevices;
 
 public class ServerProcess implements CSProcess {
 

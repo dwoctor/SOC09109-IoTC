@@ -2,8 +2,8 @@ package uk.ac.napier.communicator.communication.connections.wifi.local;
 
 import android.content.Context;
 
-import uk.ac.napier.communicator.communication.connections.wifi.devices.WifiDevice;
 import uk.ac.napier.communicator.communication.connections.wifi.local.handshake.HandshakeProcess;
+import uk.ac.napier.communicator.communication.devices.WifiDevice;
 
 public class WifiManager {
 

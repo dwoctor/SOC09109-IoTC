@@ -8,7 +8,7 @@ import org.jcsp.lang.One2OneChannel;
 import org.jcsp.lang.Parallel;
 
 import uk.ac.napier.communicator.R;
-import uk.ac.napier.communicator.communication.connections.wifi.devices.WifiDevice;
+import uk.ac.napier.communicator.communication.devices.WifiDevice;
 
 public class HandshakeProcess implements Runnable {
 

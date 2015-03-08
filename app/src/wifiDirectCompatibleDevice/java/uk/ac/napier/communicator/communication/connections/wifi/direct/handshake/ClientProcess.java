@@ -9,7 +9,7 @@ import java.io.ObjectOutputStream;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 
-import uk.ac.napier.communicator.communication.connections.wifi.devices.WifiDevice;
+import uk.ac.napier.communicator.communication.devices.WifiDevice;
 
 public class ClientProcess implements CSProcess {
 

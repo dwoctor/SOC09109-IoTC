@@ -20,8 +20,8 @@ import android.util.Log;
 import java.util.HashMap;
 
 import uk.ac.napier.communicator.R;
-import uk.ac.napier.communicator.communication.connections.wifi.devices.WifiDevice;
 import uk.ac.napier.communicator.communication.connections.wifi.direct.handshake.HandshakeProcess;
+import uk.ac.napier.communicator.communication.devices.WifiDevice;
 
 @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
 public class WifiManager extends BroadcastReceiver {
