@@ -21,7 +21,7 @@ public class ClientProcess implements CSProcess {
     private final ChannelInput<WifiDevice> inChannel;
     private final ChannelOutput<String> debugOutChannel, errorOutChannel, infoOutChannel;
 
-    private String groupHost;
+    private String address;
     private Integer port;
     private Integer timeout;
 
@@ -38,7 +38,7 @@ public class ClientProcess implements CSProcess {
             this.infoOutChannel.write("ClientProcess Started");
             Socket socket = new Socket();
             try {
-                socket.connect((new InetSocketAddress(this.groupHost, this.port)), this.timeout);
+                socket.connect((new InetSocketAddress(this.address, this.port)), this.timeout);
                 this.infoOutChannel.write("ClientProcess Writing");
                 ObjectOutputStream writer = new ObjectOutputStream(socket.getOutputStream());
                 try {
@@ -72,8 +72,8 @@ public class ClientProcess implements CSProcess {
         }
     }
 
-    public ClientProcess groupHost(String groupHost) {
-        this.groupHost = groupHost;
+    public ClientProcess address(String address) {
+        this.address = address;
         return this;
     }
 
