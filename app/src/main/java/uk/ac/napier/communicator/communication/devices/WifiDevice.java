@@ -1,4 +1,4 @@
-package uk.ac.napier.communicator.communication.connections.wifi.devices;
+package uk.ac.napier.communicator.communication.devices;
 
 import android.content.Context;
 import android.net.wifi.WifiInfo;
@@ -11,9 +11,6 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 import java.util.Random;
-
-import uk.ac.napier.communicator.communication.devices.Device;
-import uk.ac.napier.communicator.communication.devices.DeviceType;
 
 public class WifiDevice extends Device implements Serializable {
 

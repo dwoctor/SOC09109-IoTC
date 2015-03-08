@@ -1,4 +1,4 @@
-package uk.ac.napier.communicator.communication.connections.wifi.devices;
+package uk.ac.napier.communicator.communication.devices;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -10,8 +10,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-
-import uk.ac.napier.communicator.communication.devices.Device;
 
 public class WifiDevices implements Serializable {
 
@@ -46,18 +44,18 @@ public class WifiDevices implements Serializable {
 
 
     /**
-     * Add {@link uk.ac.napier.communicator.communication.connections.wifi.devices.WifiDevicesObserver observer(s)} to observe {@link uk.ac.napier.communicator.communication.connections.wifi.devices.WifiDevices this} object for new {@link uk.ac.napier.communicator.communication.connections.wifi.devices.WifiDevice devices}.
+     * Add {@link WifiDevicesObserver observer(s)} to observe {@link WifiDevices this} object for new {@link WifiDevice devices}.
      *
-     * @param observers One or Many {@link uk.ac.napier.communicator.communication.connections.wifi.devices.WifiDevicesObserver observers} to be added.
+     * @param observers One or Many {@link WifiDevicesObserver observers} to be added.
      */
     public void addObservers(WifiDevicesObserver... observers) {
         this.observers.addAll(Arrays.asList(observers));
     }
 
     /**
-     * Updates the {@link uk.ac.napier.communicator.communication.connections.wifi.devices.WifiDevicesObserver observers} of the new {@link uk.ac.napier.communicator.communication.connections.wifi.devices.WifiDevice device}.
+     * Updates the {@link WifiDevicesObserver observers} of the new {@link WifiDevice device}.
      *
-     * @param wifiDevice The {@link uk.ac.napier.communicator.communication.connections.wifi.devices.WifiDevice device} to be sent to the {@link uk.ac.napier.communicator.communication.connections.wifi.devices.WifiDevicesObserver observers}.
+     * @param wifiDevice The {@link WifiDevice device} to be sent to the {@link WifiDevicesObserver observers}.
      */
     private void updateObservers(WifiDevice wifiDevice) {
         for (WifiDevicesObserver observer : this.observers) {
