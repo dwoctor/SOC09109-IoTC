@@ -34,7 +34,7 @@ public class WifiLocalTest extends ActionBarActivity {
         this.devicesListView = getDevicesListView();
 
         // Set up Wifi
-        this.wifi = new WifiManager(this);
+        this.wifi = new WifiManager();
         Postie.getInstance().getPrintProcess().add(new EditTextComponent(this.getIncomingMessagesEditText()));
         Postie.getInstance().start();
     }
