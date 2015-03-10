@@ -7,8 +7,9 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
-import uk.ac.napier.communicator.communication.connections.wifi.devices.WifiDevice;
-import uk.ac.napier.communicator.communication.connections.wifi.devices.WifiDevices;
+import uk.ac.napier.communicator.communication.devices.capabilities.Ability;
+import uk.ac.napier.communicator.communication.devices.capabilities.Capability;
+import uk.ac.napier.communicator.communication.devices.capabilities.GPIO;
 
 public abstract class Device implements Serializable {
 
@@ -19,6 +20,10 @@ public abstract class Device implements Serializable {
     @Expose
     @SerializedName("type")
     private DeviceType type;
+
+    @Expose
+    @SerializedName("capability")
+    private Ability capability;
 
     protected Device(String name, DeviceType type) {
         this.name = name;
@@ -35,6 +40,15 @@ public abstract class Device implements Serializable {
 
     public DeviceType getType() {
         return type;
+    }
+
+    public Capability getCapability() {
+        switch (this.capability) {
+            case Gpio:
+                return new GPIO();
+            default:
+                return null;
+        }
     }
 
     public String jsonize() {
