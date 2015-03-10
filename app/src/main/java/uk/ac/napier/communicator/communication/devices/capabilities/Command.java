@@ -48,7 +48,7 @@ public abstract class Command implements CSProcess {
                 }
             }
         }
-        logger.info("Finished.");
+        logger.debug("Finished.");
     }
 
     public Command address(String address) {
