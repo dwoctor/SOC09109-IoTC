@@ -1,18 +1,7 @@
 package uk.ac.napier.communicator.communication.devices.capabilities;
 
-import com.google.common.base.Charsets;
-import com.google.common.io.CharStreams;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.ObjectOutputStream;
-import java.net.InetSocketAddress;
-import java.net.Socket;
-
-import uk.ac.napier.communicator.communication.devices.WifiDevice;
-import uk.ac.napier.communicator.communication.devices.WifiDevices;
 
 public class GPIOCommand extends Command {
 
