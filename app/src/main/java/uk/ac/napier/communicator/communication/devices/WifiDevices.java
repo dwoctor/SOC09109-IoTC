@@ -42,7 +42,6 @@ public class WifiDevices implements Serializable {
         return gson.fromJson(json, WifiDevices.class);
     }
 
-
     /**
      * Add {@link WifiDevicesObserver observer(s)} to observe {@link WifiDevices this} object for new {@link WifiDevice devices}.
      *
