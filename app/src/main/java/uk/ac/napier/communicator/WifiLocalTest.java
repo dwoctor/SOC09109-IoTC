@@ -12,6 +12,8 @@ import uk.ac.napier.communicator.communication.connections.wifi.local.WifiManage
 import uk.ac.napier.communicator.communication.devices.Device;
 import uk.ac.napier.communicator.communication.devices.Devices;
 import uk.ac.napier.communicator.communication.devices.WifiDevice;
+import uk.ac.napier.communicator.communication.devices.capabilities.Capability;
+import uk.ac.napier.communicator.communication.devices.capabilities.GPIO;
 import uk.ac.napier.communicator.communication.logistics.Postie;
 import uk.ac.napier.communicator.communication.messages.unidirectional.BinaryMessage;
 import uk.ac.napier.communicator.ui.ArrayAdapterComponent;
@@ -49,7 +51,11 @@ public class WifiLocalTest extends ActionBarActivity {
                     if (item.isWifiDevice()) {
                         WifiDevice wifiDevice = item.getWifiInfo();
                         try {
-                            Postie.getInstance().post(new BinaryMessage(wifiDevice.getIp(), 9999, 500, item.toString().getBytes()));
+                            //Postie.getInstance().post(new BinaryMessage(wifiDevice.getIp(), 9999, 500, item.toString().getBytes()));
+                            Capability capability  =  wifiDevice.getCapability();
+                            if (capability instanceof GPIO) {
+                                ((GPIO) capability).createCommand(3, true).address(wifiDevice.getIp()).port(2222).timeout(500).send();
+                            }
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
