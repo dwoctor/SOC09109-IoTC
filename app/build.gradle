@@ -33,9 +33,10 @@ android {
 dependencies {
     compile 'com.android.support:appcompat-v7:21.0.3'
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile 'com.google.code.gson:gson:2.3.1'
-    compile 'org.codehaus.jcsp:jcsp:1.1-rc5'
     compile 'commons-http:commons-http:1.1'
+    compile 'com.google.code.gson:gson:2.3.1'
     compile 'com.google.guava:guava:18.0'
-    compile 'org.apache.logging.log4j:log4j:2.2'
+    compile 'org.apache.logging.log4j:log4j-api:2.2'
+    compile 'org.apache.logging.log4j:log4j-core:2.2'
+    compile 'org.codehaus.jcsp:jcsp:1.1-rc5'
 }

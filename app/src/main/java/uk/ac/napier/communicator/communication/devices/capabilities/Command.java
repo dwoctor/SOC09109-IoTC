@@ -3,7 +3,8 @@ package uk.ac.napier.communicator.communication.devices.capabilities;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.jcsp.lang.CSProcess;
 import org.jcsp.lang.ProcessManager;
 
@@ -14,7 +15,7 @@ import java.net.Socket;
 
 public abstract class Command implements CSProcess {
 
-    private static Logger logger = Logger.getLogger(Command.class.getName());
+    private static Logger logger = LogManager.getLogger();
 
     private String address;
     private Integer port;
