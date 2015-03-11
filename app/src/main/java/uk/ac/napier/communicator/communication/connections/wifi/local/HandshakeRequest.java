@@ -33,12 +33,8 @@ public class HandshakeRequest implements CSProcess {
             InputStreamReader reader = new InputStreamReader(socket.getInputStream(), Charsets.UTF_8);
             try {
                 logger.debug("Started reading data.");
-                String data = CharStreams.toString(reader);
+                WifiDevices.getInstance().merge(WifiDevice.dejsonize(CharStreams.toString(reader)));
                 logger.debug("Finished reading data.");
-                logger.debug(data);
-                logger.debug("Started merging data.");
-                WifiDevices.getInstance().merge(WifiDevice.dejsonize(data));
-                logger.debug("Finished merging data.");
             } catch (Exception e) {
                 logger.error("Reader error.", e);
             }
