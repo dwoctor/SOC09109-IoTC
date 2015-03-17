@@ -9,4 +9,9 @@ public class GPIO extends Capability {
     public GPIOCommand createCommand(Integer pin, Boolean state) {
         return new GPIOCommand(pin, state);
     }
+
+    public GPIOState createState(Integer pin) {
+        return new GPIOState(pin);
+    }
+
 }
