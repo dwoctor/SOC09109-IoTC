@@ -20,6 +20,7 @@ public abstract class Command implements CSProcess {
     private String address;
     private Integer port;
     private Integer timeout;
+    private CommandCallback callback;
 
     public void run() {
         logger.debug("Started.");
@@ -50,6 +51,7 @@ public abstract class Command implements CSProcess {
             }
         }
         logger.debug("Finished.");
+        this.callback.run();
     }
 
     public Command address(String address) {
@@ -64,6 +66,11 @@ public abstract class Command implements CSProcess {
 
     public Command timeout(Integer timeout) {
         this.timeout = timeout;
+        return this;
+    }
+
+    public Command callback(CommandCallback callback) {
+        this.callback = callback;
         return this;
     }
 
