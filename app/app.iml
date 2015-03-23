@@ -112,8 +112,6 @@
     <orderEntry type="library" exported="" name="guava-18.0" level="project" />
     <orderEntry type="library" exported="" name="support-v4-21.0.3" level="project" />
     <orderEntry type="library" exported="" name="support-annotations-21.0.3" level="project" />
-    <orderEntry type="library" exported="" name="log4j-api-2.2" level="project" />
-    <orderEntry type="library" exported="" name="log4j-core-2.2" level="project" />
     <orderEntry type="library" exported="" name="org.osgi.core-1.4.0" level="project" />
     <orderEntry type="library" exported="" name="jcsp-1.1-rc5" level="project" />
   </component>
