@@ -71,10 +71,8 @@ public abstract class State implements CSProcess {
         return gson.toJson(this);
     }
 
-    public State dejsonize(String json) {
-        Gson gson = new GsonBuilder().create();
-        return gson.fromJson(json, State.class);
-    }
+
+    public abstract State dejsonize(String json);
 
     public void send() {
         ProcessManager manager = new ProcessManager(this);
