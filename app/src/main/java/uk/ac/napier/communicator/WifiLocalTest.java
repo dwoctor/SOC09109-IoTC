@@ -15,6 +15,7 @@ import uk.ac.napier.communicator.communication.devices.WifiDevice;
 import uk.ac.napier.communicator.communication.devices.capabilities.Capability;
 import uk.ac.napier.communicator.communication.devices.capabilities.CommandCallback;
 import uk.ac.napier.communicator.communication.devices.capabilities.GPIO;
+import uk.ac.napier.communicator.communication.devices.capabilities.GPIOState;
 import uk.ac.napier.communicator.communication.devices.capabilities.State;
 import uk.ac.napier.communicator.communication.devices.capabilities.StateCallback;
 import uk.ac.napier.communicator.communication.logistics.Postie;
@@ -55,13 +56,13 @@ public class WifiLocalTest extends ActionBarActivity {
                         try {
                             final Capability capability = wifiDevice.getCapability();
                             if (capability instanceof GPIO) {
-                                ((GPIO) capability).createCommand(3, true).address(wifiDevice.getIp()).port(3333).timeout(500).callback(new CommandCallback() {
+                                ((GPIO) capability).createState(17).address(wifiDevice.getIp()).port(2222).timeout(500).callback(new StateCallback() {
                                     @Override
-                                    public void run() {
-                                        ((GPIO) capability).createState(3).address(wifiDevice.getIp()).port(2222).timeout(500).callback(new StateCallback() {
+                                    public void run(State data) {
+                                        ((GPIO) capability).createCommand(17, !((GPIOState) data).getState()).address(wifiDevice.getIp()).port(3333).timeout(500).callback(new CommandCallback() {
                                             @Override
-                                            public void run(State data) {
-                                                System.out.println(data.jsonize());
+                                            public void run() {
+
                                             }
                                         }).send();
                                     }
