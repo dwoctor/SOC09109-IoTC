@@ -7,9 +7,9 @@ import org.jcsp.lang.CSProcess;
 import org.jcsp.lang.ProcessManager;
 
 import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.nio.charset.Charset;
 
 public abstract class Command implements CSProcess {
 
@@ -22,11 +22,7 @@ public abstract class Command implements CSProcess {
         Socket socket = new Socket();
         try {
             socket.connect((new InetSocketAddress(this.address, this.port)), this.timeout);
-            ObjectOutputStream writer = new ObjectOutputStream(socket.getOutputStream());
-            try {
-                writer.writeUTF(this.jsonize());
-            } catch (Exception e) {
-            }
+            socket.getOutputStream().write(this.jsonize().getBytes(Charset.forName("UTF-8")));
         } catch (Exception e) {
         } finally {
             if (socket != null) {
