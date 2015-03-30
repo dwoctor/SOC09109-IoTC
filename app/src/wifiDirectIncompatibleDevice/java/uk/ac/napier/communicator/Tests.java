@@ -10,6 +10,7 @@ public class Tests extends ActionBarActivity {
 
     private Button helloTestButton;
     private Button wifiLocalTestButton;
+    private Button wifiLocalNewUiTestButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,6 +18,7 @@ public class Tests extends ActionBarActivity {
         setContentView(R.layout.activity_tests);
         this.helloTestButton = this.getHelloTestButton();
         this.wifiLocalTestButton = this.getWifiLocalTestButton();
+        this.wifiLocalNewUiTestButton = this.getWifiLocalNewUiTestButton();
     }
 
     private Button getHelloTestButton() {
@@ -46,4 +48,19 @@ public class Tests extends ActionBarActivity {
         }
         return this.wifiLocalTestButton;
     }
+
+    private Button getWifiLocalNewUiTestButton() {
+        if (this.wifiLocalNewUiTestButton == null) {
+            Button wifiLocalTestButton = (Button) findViewById(R.id.buttonWifiLocalNewUITest);
+            wifiLocalTestButton.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    Intent wifiTestIntent = new Intent(Tests.this, WifiLocalNewUiTest.class);
+                    Tests.this.startActivity(wifiTestIntent);
+                }
+            });
+            this.wifiLocalNewUiTestButton = wifiLocalTestButton;
+        }
+        return this.wifiLocalNewUiTestButton;
+    }
+
 }

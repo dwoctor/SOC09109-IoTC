@@ -9,16 +9,18 @@ import android.widget.Button;
 public class Tests extends ActionBarActivity {
 
     private Button helloTestButton;
-    private Button wifiDirectTestButton;
     private Button wifiLocalTestButton;
+    private Button wifiLocalNewUiTestButton;
+    private Button wifiDirectTestButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tests);
         this.helloTestButton = this.getHelloTestButton();
-        this.wifiDirectTestButton = this.getWifiDirectTestButton();
         this.wifiLocalTestButton = this.getWifiLocalTestButton();
+        this.wifiLocalNewUiTestButton = this.getWifiLocalNewUiTestButton();
+        this.wifiDirectTestButton = this.getWifiDirectTestButton();
     }
 
     private Button getHelloTestButton() {
@@ -35,6 +37,34 @@ public class Tests extends ActionBarActivity {
         return this.helloTestButton;
     }
 
+    private Button getWifiLocalTestButton() {
+        if (this.wifiLocalTestButton == null) {
+            Button wifiLocalTestButton = (Button) findViewById(R.id.buttonWifiLocalTest);
+            wifiLocalTestButton.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    Intent wifiTestIntent = new Intent(Tests.this, WifiLocalTest.class);
+                    Tests.this.startActivity(wifiTestIntent);
+                }
+            });
+            this.wifiLocalTestButton = wifiLocalTestButton;
+        }
+        return this.wifiLocalTestButton;
+    }
+
+    private Button getWifiLocalNewUiTestButton() {
+        if (this.wifiLocalNewUiTestButton == null) {
+            Button wifiLocalTestButton = (Button) findViewById(R.id.buttonWifiLocalNewUiTest);
+            wifiLocalTestButton.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    Intent wifiTestIntent = new Intent(Tests.this, WifiLocalNewUiTest.class);
+                    Tests.this.startActivity(wifiTestIntent);
+                }
+            });
+            this.wifiLocalNewUiTestButton = wifiLocalTestButton;
+        }
+        return this.wifiLocalNewUiTestButton;
+    }
+
     private Button getWifiDirectTestButton() {
         if (this.wifiDirectTestButton == null) {
             Button wifiDirectTestButton = (Button) findViewById(R.id.buttonWifiDirectTest);
@@ -49,17 +79,4 @@ public class Tests extends ActionBarActivity {
         return this.wifiDirectTestButton;
     }
 
-    private Button getWifiLocalTestButton() {
-        if (this.wifiLocalTestButton == null) {
-            Button wifiLocalTestButton = (Button) findViewById(R.id.buttonWifiLocalTest);
-            wifiLocalTestButton.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    Intent wifiTestIntent = new Intent(Tests.this, WifiLocalTest.class);
-                    Tests.this.startActivity(wifiTestIntent);
-                }
-            });
-            this.wifiLocalTestButton = wifiLocalTestButton;
-        }
-        return this.wifiLocalTestButton;
-    }
 }

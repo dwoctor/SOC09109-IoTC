@@ -31,6 +31,9 @@
             android:name=".WifiLocalTest"
             android:label="@string/title_activity_wifi_local_test" />
         <activity
+            android:name=".WifiLocalNewUiTest"
+            android:label="@string/title_activity_wifi_local_new_ui_test" />
+        <activity
             android:name=".WifiDirectTest"
             android:label="@string/title_activity_wifi_direct_test" />
     </application>

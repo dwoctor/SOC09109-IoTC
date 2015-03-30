@@ -20,21 +20,28 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:text="Hello Test" />
-
-        <Button
-            android:id="@+id/buttonWifiDirectTest"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="WiFi Direct Test" />
+            android:text="@string/hello_world" />
 
         <Button
             android:id="@+id/buttonWifiLocalTest"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:text="WiFi Local Test" />
+            android:text="@string/title_activity_wifi_local_test" />
+
+        <Button
+            android:id="@+id/buttonWifiLocalNewUiTest"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/title_activity_wifi_local_new_ui_test" />
+
+        <Button
+            android:id="@+id/buttonWifiDirectTest"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/title_activity_wifi_direct_test" />
 
     </LinearLayout>
 
