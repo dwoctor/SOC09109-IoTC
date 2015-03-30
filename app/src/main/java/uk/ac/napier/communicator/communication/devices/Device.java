@@ -6,12 +6,29 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.util.HashMap;
 
 import uk.ac.napier.communicator.communication.devices.capabilities.Ability;
 import uk.ac.napier.communicator.communication.devices.capabilities.Capability;
 import uk.ac.napier.communicator.communication.devices.capabilities.GPIO;
 
 public abstract class Device implements Serializable {
+
+    private static HashMap<String, String> names;
+
+    static {
+        names = new HashMap<String, String>();
+        names.put("192.168.0.1", "Merlot");
+        names.put("192.168.0.2", "Cabernet Sauvignon");
+        names.put("192.168.0.3", "Pinot Noir");
+        names.put("192.168.0.4", "Shiraz");
+        names.put("192.168.0.5", "Sangiovese");
+        names.put("192.168.0.6", "Malbec");
+        names.put("192.168.0.7", "Tempranillo");
+        names.put("192.168.0.8", "Gamay");
+        names.put("192.168.0.9", "Zinfandel");
+        names.put("192.168.0.10", "Chardonnay");
+    }
 
     @Expose
     @SerializedName("name")
@@ -35,7 +52,7 @@ public abstract class Device implements Serializable {
     }
 
     public String getName() {
-        return name;
+        return names.get(this.name);
     }
 
     public DeviceType getType() {
