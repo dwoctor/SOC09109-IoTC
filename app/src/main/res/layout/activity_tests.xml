@@ -10,10 +10,6 @@
         android:layout_alignParentTop="true" android:layout_centerHorizontal="true"
         android:orientation="vertical">
 
-        <Button android:id="@+id/buttonHelloTest" android:layout_width="fill_parent"
-            android:layout_height="wrap_content" android:layout_gravity="center_horizontal"
-            android:text="@string/title_activity_hello_world_test" />
-
         <Button android:id="@+id/buttonWifiLocalNewUITest" android:layout_width="fill_parent"
             android:layout_height="wrap_content" android:layout_gravity="center_horizontal"
             android:text="@string/title_activity_wifi_local_new_ui_test" />

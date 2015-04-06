@@ -25,10 +25,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".HelloWorldTest"
-            android:label="@string/title_activity_hello_world_test"
-            android:noHistory="true" />
-        <activity
             android:name=".WifiLocalNewUiTestActivity"
             android:label="@string/title_activity_wifi_local_new_ui_test"
             android:noHistory="true" />
