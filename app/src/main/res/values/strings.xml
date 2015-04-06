@@ -6,11 +6,8 @@
     <string name="title_activity_tests">Tests</string>
     <string name="title_activity_hello_world_test">Hello World!</string>
     <string name="title_activity_wifi_local_new_ui_test">WiFi Local New UI Test</string>
-    <string name="title_activity_wifi_direct_test">WiFi Direct Test</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="this_will_change">This will Change</string>
-
-    <string name="log_wifi">WiFi</string>
 
 </resources>

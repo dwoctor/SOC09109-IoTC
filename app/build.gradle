@@ -20,14 +20,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    productFlavors {
-        wifiDirectIncompatibleDevice {
-            minSdkVersion 10
-        }
-        wifiDirectCompatibleDevice {
-            minSdkVersion 14
-        }
-    }
 }
 
 dependencies {
