@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName;
 
 import uk.ac.napier.communicator.communication.devices.capabilities.functionality.state.State;
 
-public class GPIOState extends State {
+public class GpioState extends State {
 
     @Expose
     @SerializedName("pin")
@@ -17,7 +17,7 @@ public class GPIOState extends State {
     @SerializedName("state")
     private Boolean state;
 
-    public GPIOState(Integer pin) {
+    public GpioState(Integer pin) {
         this.pin = pin;
     }
 
@@ -31,6 +31,7 @@ public class GPIOState extends State {
 
     public State dejsonize(String json) {
         Gson gson = new GsonBuilder().create();
-        return gson.fromJson(json, GPIOState.class);
+        return gson.fromJson(json, GpioState.class);
     }
+
 }

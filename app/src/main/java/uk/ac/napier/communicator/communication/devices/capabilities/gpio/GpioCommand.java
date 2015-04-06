@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 
 import uk.ac.napier.communicator.communication.devices.capabilities.functionality.command.Command;
 
-public class GPIOCommand extends Command {
+public class GpioCommand extends Command {
 
     @Expose
     @SerializedName("pin")
@@ -15,8 +15,9 @@ public class GPIOCommand extends Command {
     @SerializedName("state")
     private Boolean state;
 
-    public GPIOCommand(Integer pin, Boolean state) {
+    public GpioCommand(Integer pin, Boolean state) {
         this.pin = pin;
         this.state = state;
     }
+
 }

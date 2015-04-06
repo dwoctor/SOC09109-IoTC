@@ -14,12 +14,15 @@ import uk.ac.napier.communicator.communication.devices.capabilities.Capability;
 import uk.ac.napier.communicator.communication.devices.capabilities.functionality.command.CommandCallback;
 import uk.ac.napier.communicator.communication.devices.capabilities.functionality.state.State;
 import uk.ac.napier.communicator.communication.devices.capabilities.functionality.state.StateCallback;
-import uk.ac.napier.communicator.communication.devices.capabilities.gpio.GPIO;
-import uk.ac.napier.communicator.communication.devices.capabilities.gpio.GPIOState;
+import uk.ac.napier.communicator.communication.devices.capabilities.gpio.Gpio;
+import uk.ac.napier.communicator.communication.devices.capabilities.gpio.GpioState;
+import uk.ac.napier.communicator.ui.component.SwitchUiComponent;
+import uk.ac.napier.communicator.ui.update.UpdateBooleanUiComponent;
 
 public class DeviceView extends RelativeLayout {
 
     private Switch deviceState;
+    private UpdateBooleanUiComponent deviceComponent;
 
     public DeviceView(Context context) {
         this(context, null);
@@ -40,7 +43,8 @@ public class DeviceView extends RelativeLayout {
     }
 
     private void setupChildren() {
-        deviceState = (Switch) findViewById(R.id.state);
+        this.deviceState = (Switch) findViewById(R.id.state);
+        this.deviceComponent = new SwitchUiComponent(this.deviceState);
     }
 
     public void setDevice(final Device device) {
@@ -48,8 +52,8 @@ public class DeviceView extends RelativeLayout {
         if (device.isWifiDevice()) {
             final WifiDevice wifiDevice = device.getWifiInfo();
             final Capability capability = wifiDevice.getCapability();
-            if (capability instanceof GPIO) {
-                final GPIO gpio = (GPIO)capability;
+            if (capability instanceof Gpio) {
+                final Gpio gpio = (Gpio) capability;
                 deviceState.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                     @Override
                     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -64,7 +68,7 @@ public class DeviceView extends RelativeLayout {
                 gpio.createState(17).address(wifiDevice.getIp()).port(2222).timeout(500).callback(new StateCallback() {
                     @Override
                     public void run(State data) {
-                        deviceState.setChecked(((GPIOState) data).getState());
+                        deviceComponent.update(((GpioState) data).getState());
                     }
                 }).continuously(true).delay(1000).send();
             }

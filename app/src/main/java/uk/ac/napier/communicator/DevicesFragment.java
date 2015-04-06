@@ -7,15 +7,17 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import uk.ac.napier.communicator.communication.devices.Devices;
-import uk.ac.napier.communicator.ui.ArrayAdapterComponent;
+import uk.ac.napier.communicator.ui.component.ArrayAdapterUiComponent;
 
-public class DeviceListFragment extends ListFragment {
+public class DevicesFragment extends ListFragment {
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
-        DeviceAdapter devicesAdapter = new DeviceAdapter(this.getActivity(), Devices.getInstance().getDevices());
-        Devices.getInstance().addObservers(new ArrayAdapterComponent(devicesAdapter));
+        DevicesAdapter devicesAdapter = new DevicesAdapter(this.getActivity(), Devices.getInstance().getDevices());
+        Devices.getInstance().addObservers(new ArrayAdapterUiComponent(devicesAdapter));
         this.setListAdapter(devicesAdapter);
         return view;
     }
+
 }

@@ -1,7 +1,5 @@
 package uk.ac.napier.communicator.communication.devices;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -37,11 +35,6 @@ public class WifiDevices implements Serializable {
         return instance;
     }
 
-    public static synchronized WifiDevices dejsonize(String json) {
-        Gson gson = new Gson();
-        return gson.fromJson(json, WifiDevices.class);
-    }
-
     /**
      * Add {@link WifiDevicesObserver observer(s)} to observe {@link WifiDevices this} object for new {@link WifiDevice devices}.
      *
@@ -62,13 +55,6 @@ public class WifiDevices implements Serializable {
         }
     }
 
-    public synchronized String jsonize() {
-        GsonBuilder gsonBuilder = new GsonBuilder();
-        gsonBuilder.excludeFieldsWithoutExposeAnnotation();
-        Gson gson = gsonBuilder.create();
-        return gson.toJson(this);
-    }
-
     public synchronized Boolean exists(Device device) {
         return this.knownDevicesTable.containsKey(device.getName());
     }
@@ -81,14 +67,13 @@ public class WifiDevices implements Serializable {
         }
     }
 
-    public synchronized void merge(WifiDevice wifiDeviceToMerge) {
-        if (!this.knownDevicesTable.containsKey(wifiDeviceToMerge.getName())) {
-            this.knownDevicesTable.put(wifiDeviceToMerge.getName(), wifiDeviceToMerge);
-            this.updateObservers(wifiDeviceToMerge);
+    public synchronized void merge(WifiDevice... wifiDevicesToMerge) {
+        for (WifiDevice wifiDeviceToMerge : wifiDevicesToMerge) {
+            if (!this.knownDevicesTable.containsKey(wifiDeviceToMerge.getName())) {
+                this.knownDevicesTable.put(wifiDeviceToMerge.getName(), wifiDeviceToMerge);
+                this.updateObservers(wifiDeviceToMerge);
+            }
         }
     }
 
-    public synchronized void merge(WifiDevices wifiDevicesToMerge) {
-        this.knownDevicesTable = wifiDevicesToMerge.knownDevicesTable;
-    }
 }

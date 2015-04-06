@@ -1,4 +1,4 @@
-package uk.ac.napier.communicator.ui;
+package uk.ac.napier.communicator.ui.component;
 
 import android.os.Handler;
 import android.os.Looper;
@@ -10,9 +10,9 @@ public abstract class UiComponent {
     private Handler handler = null;
 
     /**
-     * Passes the state of the {@link uk.ac.napier.communicator.ui.UiComponent UiComponent} to the Handler running on the  main (ui) thread.
+     * Passes the state of the {@link UiComponent UiComponent} to the Handler running on the  main (ui) thread.
      *
-     * @param state The state of this {@link uk.ac.napier.communicator.ui.UiComponent UiComponent}.
+     * @param state The state of this {@link UiComponent UiComponent}.
      */
     protected void handleState(int state) {
         // Passes a message to the handler running on the main (ui) thread.
@@ -20,7 +20,7 @@ public abstract class UiComponent {
     }
 
     /**
-     * Sets up {@link android.os.Handler Handler} for {@link uk.ac.napier.communicator.ui.UiComponent UiComponent} to update UI elements in the main (ui) thread.
+     * Sets up {@link android.os.Handler Handler} for {@link UiComponent UiComponent} to update UI elements in the main (ui) thread.
      *
      * @return Returns a {@link android.os.Handler Handler} running on the main (ui) thread.
      */

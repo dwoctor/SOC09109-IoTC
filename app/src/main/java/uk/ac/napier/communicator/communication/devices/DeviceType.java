@@ -9,12 +9,5 @@ public enum DeviceType {
         public String toString() {
             return "Wifi";
         }
-    },
-    @SerializedName("bluetooth")
-    Bluetooth {
-        @Override
-        public String toString() {
-            return "Bluetooth";
-        }
     }
 }

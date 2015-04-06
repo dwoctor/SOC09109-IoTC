@@ -2,8 +2,5 @@
 <resources>
 
     <string name="app_name">Communicator</string>
-    <string name="action_settings">Settings</string>
-    <string name="title_activity_tests">Tests</string>
-    <string name="title_activity_wifi_local_new_ui_test">WiFi Local New UI Test</string>
 
 </resources>

@@ -4,16 +4,15 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import uk.ac.napier.communicator.ui.UiComponentUpdate;
+import uk.ac.napier.communicator.ui.update.UpdateVoidUiComponent;
 
 public class Devices implements WifiDevicesObserver {
 
     private static Devices instance = null;
-    private ArrayList<Device> devices;
-    private List<UiComponentUpdate> observers = new ArrayList<UiComponentUpdate>();
+    private ArrayList<Device> devices = new ArrayList<Device>();
+    private List<UpdateVoidUiComponent> observers = new ArrayList<UpdateVoidUiComponent>();
 
     private Devices() {
-        this.devices = new ArrayList<Device>();
         WifiDevices.getInstance().addObservers(this);
     }
 
@@ -25,19 +24,19 @@ public class Devices implements WifiDevicesObserver {
     }
 
     /**
-     * Add an {@link uk.ac.napier.communicator.ui.UiComponentUpdate observer} to observe {@link uk.ac.napier.communicator.communication.devices.Devices this} object.
+     * Add an {@link uk.ac.napier.communicator.ui.update.UpdateVoidUiComponent observer} to observe {@link uk.ac.napier.communicator.communication.devices.Devices this} object.
      *
-     * @param observers One or Many {@link uk.ac.napier.communicator.ui.UiComponentUpdate observers} to be added.
+     * @param observers One or Many {@link uk.ac.napier.communicator.ui.update.UpdateVoidUiComponent observers} to be added.
      */
-    public synchronized void addObservers(UiComponentUpdate... observers) {
+    public synchronized void addObservers(UpdateVoidUiComponent... observers) {
         this.observers.addAll(Arrays.asList(observers));
     }
 
     /**
-     * Updates the {@link uk.ac.napier.communicator.ui.UiComponentUpdate observers} of {@link uk.ac.napier.communicator.communication.devices.Devices this} object.
+     * Updates the {@link uk.ac.napier.communicator.ui.update.UpdateVoidUiComponent observers} of {@link uk.ac.napier.communicator.communication.devices.Devices this} object.
      */
     private synchronized void updateObservers() {
-        for (UiComponentUpdate observer : this.observers) {
+        for (UpdateVoidUiComponent observer : this.observers) {
             observer.update();
         }
     }

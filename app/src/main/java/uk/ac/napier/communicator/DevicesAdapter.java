@@ -9,9 +9,9 @@ import java.util.List;
 
 import uk.ac.napier.communicator.communication.devices.Device;
 
-public class DeviceAdapter extends ArrayAdapter<Device> {
+public class DevicesAdapter extends ArrayAdapter<Device> {
 
-    public DeviceAdapter(Context context, List<Device> items) {
+    public DevicesAdapter(Context context, List<Device> items) {
         super(context, 0, items);
     }
 

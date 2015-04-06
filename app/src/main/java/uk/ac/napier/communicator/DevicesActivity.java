@@ -5,17 +5,15 @@ import android.support.v4.app.FragmentActivity;
 
 import uk.ac.napier.communicator.communication.connections.wifi.local.WifiManager;
 
-public class WifiLocalNewUiTestActivity extends FragmentActivity {
-
-    WifiManager wifi;
+public class DevicesActivity extends FragmentActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.setContentView(R.layout.activity_wifi_local_new_ui_test);
+        this.setContentView(R.layout.activity_devices);
 
         // Set up Wifi
-        this.wifi = new WifiManager();
+        WifiManager.discoverDevices();
     }
 
 }

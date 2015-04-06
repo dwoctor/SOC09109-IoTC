@@ -1,7 +1,5 @@
 package uk.ac.napier.communicator.communication.devices;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -9,7 +7,7 @@ import java.io.Serializable;
 
 import uk.ac.napier.communicator.communication.devices.capabilities.Ability;
 import uk.ac.napier.communicator.communication.devices.capabilities.Capability;
-import uk.ac.napier.communicator.communication.devices.capabilities.gpio.GPIO;
+import uk.ac.napier.communicator.communication.devices.capabilities.gpio.Gpio;
 
 public abstract class Device implements Serializable {
 
@@ -45,17 +43,10 @@ public abstract class Device implements Serializable {
     public Capability getCapability() {
         switch (this.capability) {
             case Gpio:
-                return new GPIO();
+                return new Gpio();
             default:
                 return null;
         }
-    }
-
-    public String jsonize() {
-        GsonBuilder gsonBuilder = new GsonBuilder();
-        gsonBuilder.excludeFieldsWithoutExposeAnnotation();
-        Gson gson = gsonBuilder.create();
-        return gson.toJson(this);
     }
 
     public Boolean isWifiDevice() {
@@ -65,4 +56,5 @@ public abstract class Device implements Serializable {
     public WifiDevice getWifiInfo() {
         return WifiDevices.getInstance().get(this);
     }
+
 }
