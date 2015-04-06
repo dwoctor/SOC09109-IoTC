@@ -37,7 +37,7 @@ public class WifiDevices implements Serializable {
         return instance;
     }
 
-    public static WifiDevices dejsonize(String json) {
+    public static synchronized WifiDevices dejsonize(String json) {
         Gson gson = new Gson();
         return gson.fromJson(json, WifiDevices.class);
     }
@@ -47,7 +47,7 @@ public class WifiDevices implements Serializable {
      *
      * @param observers One or Many {@link WifiDevicesObserver observers} to be added.
      */
-    public void addObservers(WifiDevicesObserver... observers) {
+    public synchronized void addObservers(WifiDevicesObserver... observers) {
         this.observers.addAll(Arrays.asList(observers));
     }
 
@@ -56,24 +56,24 @@ public class WifiDevices implements Serializable {
      *
      * @param wifiDevice The {@link WifiDevice device} to be sent to the {@link WifiDevicesObserver observers}.
      */
-    private void updateObservers(WifiDevice wifiDevice) {
+    private synchronized void updateObservers(WifiDevice wifiDevice) {
         for (WifiDevicesObserver observer : this.observers) {
             observer.update(wifiDevice);
         }
     }
 
-    public String jsonize() {
+    public synchronized String jsonize() {
         GsonBuilder gsonBuilder = new GsonBuilder();
         gsonBuilder.excludeFieldsWithoutExposeAnnotation();
         Gson gson = gsonBuilder.create();
         return gson.toJson(this);
     }
 
-    public Boolean exists(Device device) {
+    public synchronized Boolean exists(Device device) {
         return this.knownDevicesTable.containsKey(device.getName());
     }
 
-    public WifiDevice get(Device device) {
+    public synchronized WifiDevice get(Device device) {
         if (this.knownDevicesTable.containsKey(device.getName())) {
             return this.knownDevicesTable.get(device.getName());
         } else {
@@ -81,14 +81,14 @@ public class WifiDevices implements Serializable {
         }
     }
 
-    public void merge(WifiDevice wifiDeviceToMerge) {
+    public synchronized void merge(WifiDevice wifiDeviceToMerge) {
         if (!this.knownDevicesTable.containsKey(wifiDeviceToMerge.getName())) {
             this.knownDevicesTable.put(wifiDeviceToMerge.getName(), wifiDeviceToMerge);
             this.updateObservers(wifiDeviceToMerge);
         }
     }
 
-    public void merge(WifiDevices wifiDevicesToMerge) {
+    public synchronized void merge(WifiDevices wifiDevicesToMerge) {
         this.knownDevicesTable = wifiDevicesToMerge.knownDevicesTable;
     }
 }

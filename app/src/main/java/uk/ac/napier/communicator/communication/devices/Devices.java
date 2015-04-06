@@ -29,27 +29,27 @@ public class Devices implements WifiDevicesObserver {
      *
      * @param observers One or Many {@link uk.ac.napier.communicator.ui.UiComponentUpdate observers} to be added.
      */
-    public void addObservers(UiComponentUpdate... observers) {
+    public synchronized void addObservers(UiComponentUpdate... observers) {
         this.observers.addAll(Arrays.asList(observers));
     }
 
     /**
      * Updates the {@link uk.ac.napier.communicator.ui.UiComponentUpdate observers} of {@link uk.ac.napier.communicator.communication.devices.Devices this} object.
      */
-    private void updateObservers() {
+    private synchronized void updateObservers() {
         for (UiComponentUpdate observer : this.observers) {
             observer.update();
         }
     }
 
     @Override
-    public void update(WifiDevice device) {
-        devices.add(device);
+    public synchronized void update(WifiDevice device) {
+        this.devices.add(device);
         this.updateObservers();
     }
 
-    public ArrayList<Device> getDevices() {
-        return devices;
+    public synchronized ArrayList<Device> getDevices() {
+        return this.devices;
     }
 
 }

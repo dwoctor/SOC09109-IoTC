@@ -56,7 +56,7 @@ public class Tests extends ActionBarActivity {
             Button wifiLocalTestButton = (Button) findViewById(R.id.buttonWifiLocalNewUiTest);
             wifiLocalTestButton.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    Intent wifiTestIntent = new Intent(Tests.this, WifiLocalNewUiTest.class);
+                    Intent wifiTestIntent = new Intent(Tests.this, WifiLocalNewUiTestActivity.class);
                     Tests.this.startActivity(wifiTestIntent);
                 }
             });

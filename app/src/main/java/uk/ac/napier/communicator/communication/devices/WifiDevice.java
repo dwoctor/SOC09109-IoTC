@@ -10,11 +10,28 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.Random;
 
 public class WifiDevice extends Device implements Serializable {
 
     private static WifiDevice localDevice = null;
+
+    private static HashMap<String, String> names;
+
+    static {
+        names = new HashMap<String, String>();
+        names.put("192.168.43.1", "Merlot");
+        names.put("192.168.43.2", "Cabernet Sauvignon");
+        names.put("192.168.43.3", "Pinot Noir");
+        names.put("192.168.43.4", "Shiraz");
+        names.put("192.168.43.5", "Sangiovese");
+        names.put("192.168.43.6", "Malbec");
+        names.put("192.168.43.7", "Tempranillo");
+        names.put("192.168.43.8", "Gamay");
+        names.put("192.168.43.9", "Zinfandel");
+        names.put("192.168.43.10", "Chardonnay");
+    }
 
     @Expose
     @SerializedName("ip")
@@ -47,12 +64,17 @@ public class WifiDevice extends Device implements Serializable {
         return WifiDevice.localDevice;
     }
 
+    @Override
+    public String getName() {
+        return names.get(this.getIp());
+    }
+
     public String getIp() {
-        return ip;
+        return this.ip;
     }
 
     public String getMac() {
-        return mac;
+        return this.mac;
     }
 
 }

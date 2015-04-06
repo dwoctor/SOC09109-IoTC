@@ -8,9 +8,8 @@ public class WifiManager {
     }
 
     private void discoverPeers() {
-        //for (Integer i = 0; i < 255; i++) {
-        for (Integer i = 0; i < 10; i++) {
-            new HandshakeRequest().address(String.format("192.168.0.%d", i)).port(1111).timeout(500).send();
+        for (Integer i = 2; i <= 255; i++) {
+            new HandshakeRequest().address(String.format("192.168.43.%d", i)).port(1111).timeout(500).send();
         }
     }
 

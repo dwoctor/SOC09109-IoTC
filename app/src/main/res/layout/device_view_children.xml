@@ -1,27 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/name"
+    <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/abc_text_size_menu_material"
-        android:layout_weight="0.90"
-        android:text="Device"
-        android:textSize="24dp" />
+        android:layout_height="wrap_content">
 
-    <ToggleButton
-        android:id="@+id/state"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/abc_text_size_menu_material"
-        android:layout_weight="0.10"
-        android:checked="false"
-        android:onClick="onToggleClicked"
-        android:textOff="off"
-        android:textOn="on"
-        android:textSize="18dp" />
+        <Switch
+            android:id="@+id/state"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_margin="@dimen/abc_text_size_menu_material"
+            android:text="Device"
+            android:textSize="24dp" />
+
+    </RelativeLayout>
 
 </merge>
