@@ -28,9 +28,6 @@
             android:name=".HelloWorldTest"
             android:label="@string/title_activity_hello_world_test" />
         <activity
-            android:name=".WifiLocalTest"
-            android:label="@string/title_activity_wifi_local_test" />
-        <activity
             android:name=".WifiLocalNewUiTestActivity"
             android:label="@string/title_activity_wifi_local_new_ui_test" />
         <activity
